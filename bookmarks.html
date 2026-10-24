@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="View and manage your bookmarked academic lecture notes, laboratory manuals, and previous examination question papers.">
+  <title>Saved Bookmarks — EduConnect</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+
+  <!-- Inter Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Core Stylesheets -->
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/forms.css">
+  <link rel="stylesheet" href="css/resources.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="site-header" role="banner">
+    <div class="container header-container">
+      <a href="index.html" class="brand" aria-label="EduConnect Home">
+        <div class="brand-icon">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/></svg>
+        </div>
+        <div class="brand-text">
+          <span class="brand-name">Edu<span>Connect</span></span>
+          <span class="brand-tagline-header">Learn Together. Grow Together.</span>
+        </div>
+      </a>
+
+      <nav class="desktop-nav" role="navigation" aria-label="Primary Navigation">
+        <ul class="nav-list">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="resources.html" class="nav-link">Resource Library</a></li>
+          <li><a href="upload.html" class="nav-link">Upload Resource</a></li>
+          <li><a href="about.html" class="nav-link">About</a></li>
+          <li><a href="contact.html" class="nav-link">Contact</a></li>
+        </ul>
+        <div class="auth-nav" id="desktop-auth-container">
+          <a href="login.html" class="btn btn-outline btn-sm">Sign In</a>
+        </div>
+      </nav>
+
+      <button type="button" class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Open mobile navigation menu" aria-expanded="false" aria-controls="mobile-drawer">
+        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <div class="mobile-nav-overlay" id="mobile-nav-overlay"></div>
+  <aside class="mobile-drawer" id="mobile-drawer" aria-label="Mobile Navigation Drawer">
+    <div class="mobile-drawer-header">
+      <div class="brand"><span class="brand-name">Edu<span>Connect</span></span></div>
+      <button type="button" class="mobile-drawer-close" id="mobile-drawer-close" aria-label="Close menu">&times;</button>
+    </div>
+    <div class="mobile-drawer-body">
+      <ul class="mobile-nav-list">
+        <li><a href="index.html" class="mobile-nav-link">Home</a></li>
+        <li><a href="resources.html" class="mobile-nav-link">Resource Library</a></li>
+        <li><a href="upload.html" class="mobile-nav-link">Upload Resource</a></li>
+        <li><a href="about.html" class="mobile-nav-link">About</a></li>
+        <li><a href="contact.html" class="mobile-nav-link">Contact</a></li>
+      </ul>
+      <div class="mobile-drawer-auth" id="mobile-auth-container"></div>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main id="main-content" class="section-sm">
+    <div class="container">
+      <!-- Breadcrumbs -->
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <span class="breadcrumb-item"><a href="index.html">Home</a></span>
+        <span class="breadcrumb-separator">/</span>
+        <span class="breadcrumb-current">Saved Bookmarks</span>
+      </nav>
+
+      <!-- Guest Notice Banner if not signed in -->
+      <div id="guest-bookmarks-notice" style="display: none; background-color: var(--color-warning-bg); border: 1px solid var(--color-warning-border); border-radius: var(--radius-lg); padding: var(--spacing-4); margin-bottom: var(--spacing-6); align-items: center; justify-content: space-between; gap: 16px;">
+        <div style="font-size: 0.875rem; color: var(--color-warning-text);">
+          <strong>Guest Mode:</strong> You are currently viewing bookmarks stored locally on this browser. <a href="login.html" style="font-weight: 600; text-decoration: underline;">Sign in</a> to synchronize your bookmarks across all your devices.
+        </div>
+        <a href="login.html" class="btn btn-outline btn-sm">Sign In</a>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: var(--spacing-4); margin-bottom: var(--spacing-8);">
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: var(--spacing-4);">
+          <div>
+            <h1 style="font-size: var(--font-size-3xl); margin-bottom: var(--spacing-2);">Saved Bookmarks</h1>
+            <p style="color: var(--color-gray-600); margin: 0;">
+              Quickly retrieve your saved lecture notes, revision guides, and exam archives.
+            </p>
+          </div>
+          <div style="width: 100%; max-width: 320px;">
+            <label for="bookmark-filter-input" class="sr-only">Search within bookmarks</label>
+            <input
+              type="text"
+              id="bookmark-filter-input"
+              class="form-control"
+              placeholder="Search saved bookmarks..."
+            >
+          </div>
+        </div>
+      </div>
+
+      <!-- Bookmarks Grid -->
+      <div id="bookmarks-grid-container" class="resource-grid" aria-live="polite">
+        <!-- Rendered by bookmarks.js -->
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="container" style="text-align: center;">
+      <p style="color: var(--color-gray-400); font-size: 0.8125rem;">
+        EduConnect Community Service Project &bull; College Learning Resource Sharing Portal
+      </p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/components.js"></script>
+  <script src="js/navigation.js"></script>
+  <script src="js/bookmarks.js"></script>
+</body>
+</html>

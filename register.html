@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Create an EduConnect account to share lecture notes, download semester question papers, and collaborate with your college peers.">
+  <title>Join EduConnect — Student Registration</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+
+  <!-- Inter Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Core Stylesheets -->
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/forms.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="site-header" role="banner">
+    <div class="container header-container">
+      <a href="index.html" class="brand" aria-label="EduConnect Home">
+        <div class="brand-icon">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/></svg>
+        </div>
+        <div class="brand-text">
+          <span class="brand-name">Edu<span>Connect</span></span>
+          <span class="brand-tagline-header">Learn Together. Grow Together.</span>
+        </div>
+      </a>
+
+      <nav class="desktop-nav" role="navigation" aria-label="Primary Navigation">
+        <ul class="nav-list">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="resources.html" class="nav-link">Resource Library</a></li>
+          <li><a href="upload.html" class="nav-link">Upload Resource</a></li>
+          <li><a href="about.html" class="nav-link">About</a></li>
+          <li><a href="contact.html" class="nav-link">Contact</a></li>
+        </ul>
+        <div class="auth-nav" id="desktop-auth-container">
+          <a href="login.html" class="btn btn-outline btn-sm">Sign In</a>
+        </div>
+      </nav>
+
+      <button type="button" class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Open mobile navigation menu" aria-expanded="false" aria-controls="mobile-drawer">
+        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <div class="mobile-nav-overlay" id="mobile-nav-overlay"></div>
+  <aside class="mobile-drawer" id="mobile-drawer" aria-label="Mobile Navigation Drawer">
+    <div class="mobile-drawer-header">
+      <div class="brand"><span class="brand-name">Edu<span>Connect</span></span></div>
+      <button type="button" class="mobile-drawer-close" id="mobile-drawer-close" aria-label="Close menu">&times;</button>
+    </div>
+    <div class="mobile-drawer-body">
+      <ul class="mobile-nav-list">
+        <li><a href="index.html" class="mobile-nav-link">Home</a></li>
+        <li><a href="resources.html" class="mobile-nav-link">Resource Library</a></li>
+        <li><a href="upload.html" class="mobile-nav-link">Upload Resource</a></li>
+        <li><a href="about.html" class="mobile-nav-link">About</a></li>
+        <li><a href="contact.html" class="mobile-nav-link">Contact</a></li>
+      </ul>
+      <div class="mobile-drawer-auth" id="mobile-auth-container">
+        <a href="login.html" class="btn btn-outline">Sign In</a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main id="main-content" class="auth-page-container">
+    <div class="auth-card auth-card-wide">
+      <div class="auth-header">
+        <h1>Create Student Account</h1>
+        <p>Join EduConnect to contribute and discover verified learning materials</p>
+      </div>
+
+      <div id="register-alert" style="display: none; padding: 12px; border-radius: var(--radius-md); font-size: 0.875rem; margin-bottom: 16px;"></div>
+
+      <form id="register-form" novalidate>
+        <!-- Full Name -->
+        <div class="form-group">
+          <label for="reg-name" class="form-label form-label-required">Full Name</label>
+          <input
+            type="text"
+            id="reg-name"
+            name="fullName"
+            class="form-control"
+            placeholder="e.g. Priya Sharma"
+            required
+          >
+          <div id="name-error" class="field-error-msg" style="display: none;"></div>
+        </div>
+
+        <!-- College Email Address -->
+        <div class="form-group">
+          <label for="reg-email" class="form-label form-label-required">College Email Address</label>
+          <input
+            type="email"
+            id="reg-email"
+            name="email"
+            class="form-control"
+            placeholder="student@college.edu"
+            autocomplete="email"
+            required
+          >
+          <div id="email-error" class="field-error-msg" style="display: none;"></div>
+        </div>
+
+        <!-- Department and Semester Row -->
+        <div class="form-row form-row-2">
+          <div class="form-group">
+            <label for="reg-dept" class="form-label form-label-required">Department</label>
+            <select id="reg-dept" name="department" class="form-control" required>
+              <option value="">Select your department</option>
+              <!-- Populated by JS -->
+            </select>
+            <div id="dept-error" class="field-error-msg" style="display: none;"></div>
+          </div>
+
+          <div class="form-group">
+            <label for="reg-sem" class="form-label form-label-required">Current Semester</label>
+            <select id="reg-sem" name="semester" class="form-control" required>
+              <option value="">Select current semester</option>
+              <!-- Populated by JS -->
+            </select>
+            <div id="sem-error" class="field-error-msg" style="display: none;"></div>
+          </div>
+        </div>
+
+        <!-- Password and Confirm Password Row -->
+        <div class="form-row form-row-2">
+          <div class="form-group">
+            <label for="reg-password" class="form-label form-label-required">Password</label>
+            <div class="input-password-wrapper">
+              <input
+                type="password"
+                id="reg-password"
+                name="password"
+                class="form-control"
+                placeholder="At least 8 characters"
+                autocomplete="new-password"
+                required
+              >
+            </div>
+            <div id="password-error" class="field-error-msg" style="display: none;"></div>
+          </div>
+
+          <div class="form-group">
+            <label for="reg-confirm-password" class="form-label form-label-required">Confirm Password</label>
+            <div class="input-password-wrapper">
+              <input
+                type="password"
+                id="reg-confirm-password"
+                name="confirmPassword"
+                class="form-control"
+                placeholder="Re-enter password"
+                autocomplete="new-password"
+                required
+              >
+            </div>
+            <div id="confirm-password-error" class="field-error-msg" style="display: none;"></div>
+          </div>
+        </div>
+
+        <!-- Terms and Community Pledge -->
+        <div class="form-group" style="margin-bottom: var(--spacing-6);">
+          <label class="form-check">
+            <input type="checkbox" id="reg-terms" name="terms" required>
+            <span class="form-check-label">
+              I agree to the <a href="about.html">Academic Integrity Guidelines</a> and commit to sharing educational materials responsibly.
+            </span>
+          </label>
+          <div id="terms-error" class="field-error-msg" style="display: none;"></div>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" id="register-submit-btn" class="btn btn-primary" style="width: 100%;">
+          <span>Create Account</span>
+        </button>
+      </form>
+
+      <div class="auth-footer">
+        Already have an account? <a href="login.html">Sign in here</a>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="container" style="text-align: center;">
+      <p style="color: var(--color-gray-400); font-size: 0.8125rem;">
+        EduConnect Community Service Project &bull; College Learning Resource Sharing Portal
+      </p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/components.js"></script>
+  <script src="js/navigation.js"></script>
+  <script src="js/register.js"></script>
+</body>
+</html>

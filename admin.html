@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="EduConnect Admin Dashboard - Review student resource submissions, manage categories, and oversee portal content.">
+  <title>Admin Dashboard — EduConnect</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+
+  <!-- Inter Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Core Stylesheets -->
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/forms.css">
+  <link rel="stylesheet" href="css/resources.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="site-header" role="banner">
+    <div class="container header-container">
+      <a href="index.html" class="brand" aria-label="EduConnect Home">
+        <div class="brand-icon">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/></svg>
+        </div>
+        <div class="brand-text">
+          <span class="brand-name">Edu<span>Connect</span></span>
+          <span class="brand-tagline-header">Admin Moderation Portal</span>
+        </div>
+      </a>
+
+      <nav class="desktop-nav" role="navigation" aria-label="Primary Navigation">
+        <ul class="nav-list">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="resources.html" class="nav-link">Resource Library</a></li>
+          <li><a href="admin.html" class="nav-link active">Admin Dashboard</a></li>
+        </ul>
+        <div class="auth-nav" id="desktop-auth-container"></div>
+      </nav>
+
+      <button type="button" class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Open mobile navigation menu" aria-expanded="false" aria-controls="mobile-drawer">
+        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <div class="mobile-nav-overlay" id="mobile-nav-overlay"></div>
+  <aside class="mobile-drawer" id="mobile-drawer" aria-label="Mobile Navigation Drawer">
+    <div class="mobile-drawer-header">
+      <div class="brand"><span class="brand-name">Edu<span>Connect</span> Admin</span></div>
+      <button type="button" class="mobile-drawer-close" id="mobile-drawer-close" aria-label="Close menu">&times;</button>
+    </div>
+    <div class="mobile-drawer-body">
+      <ul class="mobile-nav-list">
+        <li><a href="index.html" class="mobile-nav-link">Home</a></li>
+        <li><a href="resources.html" class="mobile-nav-link">Resource Library</a></li>
+        <li><a href="admin.html" class="mobile-nav-link active">Admin Dashboard</a></li>
+      </ul>
+      <div class="mobile-drawer-auth" id="mobile-auth-container"></div>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main id="main-content" class="section-sm">
+    <div class="container">
+      <!-- Breadcrumbs -->
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <span class="breadcrumb-item"><a href="index.html">Home</a></span>
+        <span class="breadcrumb-separator">/</span>
+        <span class="breadcrumb-current">Admin Moderation Dashboard</span>
+      </nav>
+
+      <!-- Dashboard Title & Quick Demo Switch -->
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: var(--spacing-8);">
+        <div>
+          <h1 style="font-size: var(--font-size-3xl); margin-bottom: var(--spacing-2);">Resource Moderation & Management</h1>
+          <p style="color: var(--color-gray-600); margin: 0;">Review student submissions, manage published resources, and monitor CSP metrics.</p>
+        </div>
+        <div id="admin-demo-controls" style="display: none; align-items: center; gap: 8px;">
+          <button type="button" class="btn btn-outline btn-sm" id="btn-login-as-admin">
+            Sign in as Demo Admin
+          </button>
+        </div>
+      </div>
+
+      <!-- Dashboard Summary Stats Cards -->
+      <div class="admin-stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon" style="background-color: var(--color-primary-100); color: var(--color-primary-700);">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          </div>
+          <div>
+            <div class="stat-val" id="admin-stat-total">0</div>
+            <div class="stat-label">Total Resources</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon" style="background-color: var(--color-warning-bg); color: var(--color-warning-main);">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </div>
+          <div>
+            <div class="stat-val" id="admin-stat-pending">0</div>
+            <div class="stat-label">Pending Review</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon" style="background-color: var(--color-success-bg); color: var(--color-success-main);">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+          </div>
+          <div>
+            <div class="stat-val" id="admin-stat-users">128</div>
+            <div class="stat-label">Registered Students</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon" style="background-color: var(--color-accent-100); color: var(--color-accent-700);">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+          </div>
+          <div>
+            <div class="stat-val" id="admin-stat-downloads">1,780</div>
+            <div class="stat-label">Total Downloads</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION: Pending Moderation Queue -->
+      <section style="margin-bottom: var(--spacing-12);">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--spacing-4);">
+          <h2 style="font-size: var(--font-size-xl);">Pending Review Queue</h2>
+          <span class="badge badge-status-pending" id="pending-queue-badge">0 items pending</span>
+        </div>
+        <div id="pending-table-container">
+          <!-- Populated by admin.js -->
+        </div>
+      </section>
+
+      <!-- SECTION: All Published Resources Management -->
+      <section>
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: var(--spacing-4);">
+          <h2 style="font-size: var(--font-size-xl);">All Published Materials</h2>
+          <div style="width: 100%; max-width: 320px;">
+            <input type="text" id="admin-search-input" class="form-control" placeholder="Search title or contributor...">
+          </div>
+        </div>
+        <div id="all-resources-table-container">
+          <!-- Populated by admin.js -->
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="container" style="text-align: center;">
+      <p style="color: var(--color-gray-400); font-size: 0.8125rem;">
+        EduConnect Community Service Project &bull; College Learning Resource Sharing Portal
+      </p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/components.js"></script>
+  <script src="js/navigation.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

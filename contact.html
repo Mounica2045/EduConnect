@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Contact the EduConnect student project team with questions, suggestions, or feedback.">
+  <title>Contact Us — EduConnect</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+
+  <!-- Inter Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Core Stylesheets -->
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/forms.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="site-header" role="banner">
+    <div class="container header-container">
+      <a href="index.html" class="brand" aria-label="EduConnect Home">
+        <div class="brand-icon">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/></svg>
+        </div>
+        <div class="brand-text">
+          <span class="brand-name">Edu<span>Connect</span></span>
+          <span class="brand-tagline-header">Learn Together. Grow Together.</span>
+        </div>
+      </a>
+
+      <nav class="desktop-nav" role="navigation" aria-label="Primary Navigation">
+        <ul class="nav-list">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="resources.html" class="nav-link">Resource Library</a></li>
+          <li><a href="upload.html" class="nav-link">Upload Resource</a></li>
+          <li><a href="about.html" class="nav-link">About</a></li>
+          <li><a href="contact.html" class="nav-link active">Contact</a></li>
+        </ul>
+        <div class="auth-nav" id="desktop-auth-container">
+          <a href="login.html" class="btn btn-outline btn-sm">Sign In</a>
+          <a href="register.html" class="btn btn-primary btn-sm">Join EduConnect</a>
+        </div>
+      </nav>
+
+      <button type="button" class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Open mobile navigation menu" aria-expanded="false" aria-controls="mobile-drawer">
+        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <div class="mobile-nav-overlay" id="mobile-nav-overlay"></div>
+  <aside class="mobile-drawer" id="mobile-drawer" aria-label="Mobile Navigation Drawer">
+    <div class="mobile-drawer-header">
+      <div class="brand"><span class="brand-name">Edu<span>Connect</span></span></div>
+      <button type="button" class="mobile-drawer-close" id="mobile-drawer-close" aria-label="Close menu">&times;</button>
+    </div>
+    <div class="mobile-drawer-body">
+      <ul class="mobile-nav-list">
+        <li><a href="index.html" class="mobile-nav-link">Home</a></li>
+        <li><a href="resources.html" class="mobile-nav-link">Resource Library</a></li>
+        <li><a href="upload.html" class="mobile-nav-link">Upload Resource</a></li>
+        <li><a href="about.html" class="mobile-nav-link">About</a></li>
+        <li><a href="contact.html" class="mobile-nav-link active">Contact</a></li>
+      </ul>
+      <div class="mobile-drawer-auth" id="mobile-auth-container"></div>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main id="main-content" class="section-sm">
+    <div class="container" style="max-width: 900px;">
+      <!-- Breadcrumbs -->
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <span class="breadcrumb-item"><a href="index.html">Home</a></span>
+        <span class="breadcrumb-separator">/</span>
+        <span class="breadcrumb-current">Contact & Inquiries</span>
+      </nav>
+
+      <div style="margin-bottom: var(--spacing-8);">
+        <h1 style="font-size: var(--font-size-3xl); margin-bottom: var(--spacing-2);">Get in Touch</h1>
+        <p style="color: var(--color-gray-600); max-width: 600px;">
+          Have questions about our Community Service Project or feedback on the portal? Reach out to our student development team.
+        </p>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr; gap: var(--spacing-8);">
+        <!-- Contact Form Card -->
+        <div class="auth-card" style="max-width: 100%; box-shadow: var(--shadow-sm);">
+          <div id="contact-status-alert" style="display: none; padding: 12px; border-radius: var(--radius-md); font-size: 0.875rem; margin-bottom: 16px;"></div>
+
+          <form id="contact-form" novalidate>
+            <div class="form-row form-row-2">
+              <div class="form-group">
+                <label for="contact-name" class="form-label form-label-required">Your Name</label>
+                <input type="text" id="contact-name" name="name" class="form-control" placeholder="e.g. Rahul Sharma" required>
+                <div id="contact-name-error" class="field-error-msg" style="display: none;"></div>
+              </div>
+
+              <div class="form-group">
+                <label for="contact-email" class="form-label form-label-required">Email Address</label>
+                <input type="email" id="contact-email" name="email" class="form-control" placeholder="yourname@college.edu" required>
+                <div id="contact-email-error" class="field-error-msg" style="display: none;"></div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="contact-subject" class="form-label form-label-required">Subject / Category</label>
+              <select id="contact-subject" name="subject" class="form-control" required>
+                <option value="">Select inquiry topic</option>
+                <option value="General Feedback">General Feedback & Suggestion</option>
+                <option value="Resource Moderation">Resource Moderation Inquiry</option>
+                <option value="Report Inaccuracy">Report Inaccurate Material</option>
+                <option value="CSP Evaluation">Community Service Project Question</option>
+                <option value="Technical Issue">Bug or Technical Issue</option>
+              </select>
+              <div id="contact-subject-error" class="field-error-msg" style="display: none;"></div>
+            </div>
+
+            <div class="form-group">
+              <label for="contact-message" class="form-label form-label-required">Message</label>
+              <textarea id="contact-message" name="message" class="form-control" placeholder="Write your message or inquiry here..." style="min-height: 140px;" required></textarea>
+              <div id="contact-message-error" class="field-error-msg" style="display: none;"></div>
+            </div>
+
+            <button type="submit" id="contact-submit-btn" class="btn btn-primary" style="width: 100%;">
+              Send Message
+            </button>
+          </form>
+        </div>
+
+        <!-- Frequently Asked Questions -->
+        <section aria-labelledby="faq-heading" style="margin-top: var(--spacing-6);">
+          <h2 id="faq-heading" style="font-size: var(--font-size-2xl); margin-bottom: var(--spacing-4);">Frequently Asked Questions</h2>
+          <div style="display: flex; flex-direction: column; gap: var(--spacing-4);">
+            <div style="background-color: var(--color-white); border: 1px solid var(--color-gray-200); border-radius: var(--radius-lg); padding: var(--spacing-5);">
+              <h3 style="font-size: var(--font-size-base); font-weight: 700; margin-bottom: 4px;">Is EduConnect completely free for students?</h3>
+              <p style="font-size: var(--font-size-sm); color: var(--color-gray-600); margin: 0;">Yes. EduConnect is developed as an open student Community Service Project (CSP) aimed at academic collaboration. There are zero fees or subscription paywalls.</p>
+            </div>
+            <div style="background-color: var(--color-white); border: 1px solid var(--color-gray-200); border-radius: var(--radius-lg); padding: var(--spacing-5);">
+              <h3 style="font-size: var(--font-size-base); font-weight: 700; margin-bottom: 4px;">How long does it take for an uploaded document to appear?</h3>
+              <p style="font-size: var(--font-size-sm); color: var(--color-gray-600); margin: 0;">Submitted materials are reviewed by student moderators and administrator coordinators to confirm syllabus relevance and legibility before being approved into the public library.</p>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="container" style="text-align: center;">
+      <p style="color: var(--color-gray-400); font-size: 0.8125rem;">
+        EduConnect Community Service Project &bull; College Learning Resource Sharing Portal
+      </p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/components.js"></script>
+  <script src="js/navigation.js"></script>
+  <script src="js/contact.js"></script>
+</body>
+</html>

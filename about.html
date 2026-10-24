@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Learn about EduConnect — our college Community Service Project (CSP) aimed at centralizing academic study resources and peer learning.">
+  <title>About EduConnect — College Community Service Project</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+
+  <!-- Inter Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Core Stylesheets -->
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/forms.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="site-header" role="banner">
+    <div class="container header-container">
+      <a href="index.html" class="brand" aria-label="EduConnect Home">
+        <div class="brand-icon">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/></svg>
+        </div>
+        <div class="brand-text">
+          <span class="brand-name">Edu<span>Connect</span></span>
+          <span class="brand-tagline-header">Learn Together. Grow Together.</span>
+        </div>
+      </a>
+
+      <nav class="desktop-nav" role="navigation" aria-label="Primary Navigation">
+        <ul class="nav-list">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="resources.html" class="nav-link">Resource Library</a></li>
+          <li><a href="upload.html" class="nav-link">Upload Resource</a></li>
+          <li><a href="about.html" class="nav-link active">About</a></li>
+          <li><a href="contact.html" class="nav-link">Contact</a></li>
+        </ul>
+        <div class="auth-nav" id="desktop-auth-container">
+          <a href="login.html" class="btn btn-outline btn-sm">Sign In</a>
+          <a href="register.html" class="btn btn-primary btn-sm">Join EduConnect</a>
+        </div>
+      </nav>
+
+      <button type="button" class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Open mobile navigation menu" aria-expanded="false" aria-controls="mobile-drawer">
+        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <div class="mobile-nav-overlay" id="mobile-nav-overlay"></div>
+  <aside class="mobile-drawer" id="mobile-drawer" aria-label="Mobile Navigation Drawer">
+    <div class="mobile-drawer-header">
+      <div class="brand"><span class="brand-name">Edu<span>Connect</span></span></div>
+      <button type="button" class="mobile-drawer-close" id="mobile-drawer-close" aria-label="Close menu">&times;</button>
+    </div>
+    <div class="mobile-drawer-body">
+      <ul class="mobile-nav-list">
+        <li><a href="index.html" class="mobile-nav-link">Home</a></li>
+        <li><a href="resources.html" class="mobile-nav-link">Resource Library</a></li>
+        <li><a href="upload.html" class="mobile-nav-link">Upload Resource</a></li>
+        <li><a href="about.html" class="mobile-nav-link active">About</a></li>
+        <li><a href="contact.html" class="mobile-nav-link">Contact</a></li>
+      </ul>
+      <div class="mobile-drawer-auth" id="mobile-auth-container"></div>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main id="main-content" class="section-sm">
+    <div class="container" style="max-width: 900px;">
+      <!-- Breadcrumbs -->
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <span class="breadcrumb-item"><a href="index.html">Home</a></span>
+        <span class="breadcrumb-separator">/</span>
+        <span class="breadcrumb-current">About the Project</span>
+      </nav>
+
+      <!-- Hero Header -->
+      <div style="margin-bottom: var(--spacing-12); text-align: center;">
+        <span class="section-badge">Community Service Project (CSP)</span>
+        <h1 style="font-size: var(--font-size-4xl); margin-bottom: var(--spacing-4);">
+          Democratizing Academic Resources for Every Student
+        </h1>
+        <p style="font-size: var(--font-size-lg); color: var(--color-gray-600); max-width: 720px; margin: 0 auto; line-height: var(--line-height-relaxed);">
+          EduConnect is a student-driven initiative designed to address the fragmentation of learning materials across college student communities.
+        </p>
+      </div>
+
+      <!-- Problem Statement Card -->
+      <section class="auth-card" style="max-width: 100%; margin-bottom: var(--spacing-8); box-shadow: var(--shadow-sm);">
+        <h2 style="font-size: var(--font-size-2xl); margin-bottom: var(--spacing-4); color: var(--color-gray-900);">
+          The Problem We Are Solving
+        </h2>
+        <p style="line-height: var(--line-height-relaxed); color: var(--color-gray-700); margin-bottom: var(--spacing-4);">
+          Throughout our college terms, students face recurring challenges preparing for semester examinations, laboratory vivas, and competitive project presentations. High-quality subject lecture notes, previous question papers with model answers, and lab observation manuals are often scattered across disparate chat groups, expired temporary links, and private student archives.
+        </p>
+        <p style="line-height: var(--line-height-relaxed); color: var(--color-gray-700);">
+          Students entering a new semester or facing backlog revisions frequently struggle to identify trustworthy, syllabus-compliant study references. EduConnect bridges this information gap by providing a persistent, categorized web portal where knowledge is preserved and easily accessible to all learners.
+        </p>
+      </section>
+
+      <!-- Key Project Objectives -->
+      <section style="margin-bottom: var(--spacing-12);">
+        <h2 style="font-size: var(--font-size-2xl); margin-bottom: var(--spacing-6); text-align: center;">
+          Core Objectives
+        </h2>
+        <div class="benefits-grid" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));">
+          <div class="benefit-item">
+            <div class="benefit-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+            </div>
+            <div>
+              <h3 class="benefit-title">Centralized Academic Library</h3>
+              <p class="benefit-desc">Catalog study documents by department, semester, subject, and resource category.</p>
+            </div>
+          </div>
+
+          <div class="benefit-item">
+            <div class="benefit-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+            </div>
+            <div>
+              <h3 class="benefit-title">Faceted Instant Discovery</h3>
+              <p class="benefit-desc">Quickly isolate required syllabus notes with multi-attribute filtering and live text search.</p>
+            </div>
+          </div>
+
+          <div class="benefit-item">
+            <div class="benefit-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+            </div>
+            <div>
+              <h3 class="benefit-title">Peer-Powered Uploads</h3>
+              <p class="benefit-desc">Empower students to share verified notes with moderation checks to ensure academic quality.</p>
+            </div>
+          </div>
+
+          <div class="benefit-item">
+            <div class="benefit-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+            </div>
+            <div>
+              <h3 class="benefit-title">Universal Device Access</h3>
+              <p class="benefit-desc">Fully responsive on mobile devices for campus reading and desktop PCs for extensive study sessions.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Technical Architecture Overview -->
+      <section class="auth-card" style="max-width: 100%; margin-bottom: var(--spacing-8); box-shadow: var(--shadow-sm);">
+        <h2 style="font-size: var(--font-size-2xl); margin-bottom: var(--spacing-4); color: var(--color-gray-900);">
+          Technical Architecture & Stack
+        </h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-top: 16px;">
+          <div style="background-color: var(--color-gray-50); padding: 16px; border-radius: var(--radius-md); border: 1px solid var(--color-gray-200);">
+            <div style="font-weight: 700; color: var(--color-primary-800); margin-bottom: 4px;">Frontend Layer</div>
+            <div style="font-size: 0.875rem; color: var(--color-gray-700);">Vanilla HTML5, CSS3 Custom Properties, Responsive Flex/Grid, Vanilla JavaScript (ES6+), Fetch API.</div>
+          </div>
+          <div style="background-color: var(--color-gray-50); padding: 16px; border-radius: var(--radius-md); border: 1px solid var(--color-gray-200);">
+            <div style="font-weight: 700; color: var(--color-primary-800); margin-bottom: 4px;">Backend Layer</div>
+            <div style="font-size: 0.875rem; color: var(--color-gray-700);">Java Spring Boot 3.x REST Controllers, Spring Security, JWT authentication, Multipart file streaming.</div>
+          </div>
+          <div style="background-color: var(--color-gray-50); padding: 16px; border-radius: var(--radius-md); border: 1px solid var(--color-gray-200);">
+            <div style="font-weight: 700; color: var(--color-primary-800); margin-bottom: 4px;">Database & Storage</div>
+            <div style="font-size: 0.875rem; color: var(--color-gray-700);">MySQL Relational Database accessed strictly through Spring Data JPA repositories.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Academic Integrity Statement -->
+      <section style="background-color: var(--color-primary-50); border: 1px solid var(--color-primary-200); border-radius: var(--radius-xl); padding: var(--spacing-8); margin-bottom: var(--spacing-12);">
+        <h3 style="font-size: var(--font-size-xl); color: var(--color-primary-900); margin-bottom: var(--spacing-2);">
+          Commitment to Academic Integrity
+        </h3>
+        <p style="font-size: var(--font-size-sm); color: var(--color-gray-700); line-height: var(--line-height-relaxed); margin: 0;">
+          EduConnect is designed exclusively to facilitate peer review, study preparation, and collaborative learning. We strictly forbid the dissemination of confidential examination leaks, commercial copyrighted materials, or unauthorized academic records. All content is subject to review by student moderators and administrator coordinators.
+        </p>
+      </section>
+
+      <!-- CTA -->
+      <div style="text-align: center;">
+        <a href="resources.html" class="btn btn-primary btn-lg">
+          Explore the Resource Library
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="container" style="text-align: center;">
+      <p style="color: var(--color-gray-400); font-size: 0.8125rem;">
+        EduConnect Community Service Project &bull; College Learning Resource Sharing Portal
+      </p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/components.js"></script>
+  <script src="js/navigation.js"></script>
+</body>
+</html>

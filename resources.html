@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Browse and search the EduConnect Resource Library. Filter academic notes, question papers, and lab manuals by department, semester, and category.">
+  <title>Resource Library — EduConnect</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+
+  <!-- Inter Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Core Stylesheets -->
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/forms.css">
+  <link rel="stylesheet" href="css/resources.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+  <!-- Skip Navigation -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- Header -->
+  <header class="site-header" role="banner">
+    <div class="container header-container">
+      <a href="index.html" class="brand" aria-label="EduConnect Home">
+        <div class="brand-icon">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/></svg>
+        </div>
+        <div class="brand-text">
+          <span class="brand-name">Edu<span>Connect</span></span>
+          <span class="brand-tagline-header">Learn Together. Grow Together.</span>
+        </div>
+      </a>
+
+      <nav class="desktop-nav" role="navigation" aria-label="Primary Navigation">
+        <ul class="nav-list">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="resources.html" class="nav-link active">Resource Library</a></li>
+          <li><a href="upload.html" class="nav-link">Upload Resource</a></li>
+          <li><a href="about.html" class="nav-link">About</a></li>
+          <li><a href="contact.html" class="nav-link">Contact</a></li>
+        </ul>
+
+        <div class="auth-nav" id="desktop-auth-container">
+          <a href="login.html" class="btn btn-outline btn-sm">Sign In</a>
+          <a href="register.html" class="btn btn-primary btn-sm">Join EduConnect</a>
+        </div>
+      </nav>
+
+      <button type="button" class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Open mobile navigation menu" aria-expanded="false" aria-controls="mobile-drawer">
+        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <div class="mobile-nav-overlay" id="mobile-nav-overlay"></div>
+  <aside class="mobile-drawer" id="mobile-drawer" aria-label="Mobile Navigation Drawer">
+    <div class="mobile-drawer-header">
+      <div class="brand">
+        <span class="brand-name">Edu<span>Connect</span></span>
+      </div>
+      <button type="button" class="mobile-drawer-close" id="mobile-drawer-close" aria-label="Close menu">
+        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="mobile-drawer-body">
+      <ul class="mobile-nav-list">
+        <li><a href="index.html" class="mobile-nav-link">Home</a></li>
+        <li><a href="resources.html" class="mobile-nav-link active">Resource Library</a></li>
+        <li><a href="upload.html" class="mobile-nav-link">Upload Resource</a></li>
+        <li><a href="about.html" class="mobile-nav-link">About</a></li>
+        <li><a href="contact.html" class="mobile-nav-link">Contact</a></li>
+      </ul>
+      <div class="mobile-drawer-auth" id="mobile-auth-container">
+        <a href="login.html" class="btn btn-outline">Sign In</a>
+        <a href="register.html" class="btn btn-primary">Join EduConnect</a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main id="main-content" class="section-sm">
+    <div class="container">
+      <!-- Breadcrumb Navigation -->
+      <nav class="breadcrumb" aria-label="Breadcrumbs">
+        <span class="breadcrumb-item"><a href="index.html">Home</a></span>
+        <span class="breadcrumb-separator">/</span>
+        <span class="breadcrumb-current">Resource Library</span>
+      </nav>
+
+      <!-- Page Title & Header -->
+      <div style="margin-bottom: var(--spacing-8);">
+        <h1 style="font-size: var(--font-size-3xl); margin-bottom: var(--spacing-2);">Academic Resource Library</h1>
+        <p style="color: var(--color-gray-600); max-width: 650px;">
+          Explore verified course materials, lecture notes, lab manuals, and previous examination archives contributed by college students.
+        </p>
+      </div>
+
+      <!-- Main Resources 2-Column Grid -->
+      <div class="resources-layout">
+        <!-- Left Column: Filter Sidebar -->
+        <aside class="filter-sidebar" aria-label="Resource Filters">
+          <div class="filter-sidebar-header">
+            <span class="filter-sidebar-title">
+              <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/></svg>
+              Filter Materials
+            </span>
+            <button type="button" class="clear-filters-btn" id="clear-all-filters-btn">Clear All</button>
+          </div>
+
+          <form id="filters-form">
+            <!-- Category Filter -->
+            <div class="filter-group">
+              <div class="filter-group-title">Resource Category</div>
+              <div class="filter-options-list" id="category-filter-list">
+                <!-- Dynamically populated or default categories -->
+              </div>
+            </div>
+
+            <!-- Department Filter -->
+            <div class="filter-group">
+              <div class="filter-group-title">Department</div>
+              <div class="filter-options-list" id="department-filter-list">
+                <!-- Dynamically populated -->
+              </div>
+            </div>
+
+            <!-- Semester Filter -->
+            <div class="filter-group">
+              <div class="filter-group-title">Semester</div>
+              <div class="filter-options-list" id="semester-filter-list">
+                <!-- Dynamically populated -->
+              </div>
+            </div>
+
+            <!-- File Type Filter -->
+            <div class="filter-group">
+              <div class="filter-group-title">File Type</div>
+              <div class="filter-options-list" id="filetype-filter-list">
+                <label class="filter-checkbox-item">
+                  <span><input type="checkbox" name="fileType" value="PDF"> PDF Document</span>
+                </label>
+                <label class="filter-checkbox-item">
+                  <span><input type="checkbox" name="fileType" value="DOCX"> Word (.docx)</span>
+                </label>
+                <label class="filter-checkbox-item">
+                  <span><input type="checkbox" name="fileType" value="PPTX"> Presentation (.pptx)</span>
+                </label>
+                <label class="filter-checkbox-item">
+                  <span><input type="checkbox" name="fileType" value="ZIP"> Archive (.zip)</span>
+                </label>
+              </div>
+            </div>
+          </form>
+        </aside>
+
+        <!-- Right Column: Results Toolbar & Cards Grid -->
+        <section aria-label="Search results and resource list">
+          <!-- Toolbar -->
+          <div class="resources-toolbar">
+            <div class="toolbar-search">
+              <span class="toolbar-search-icon">
+                <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+              </span>
+              <label for="library-search-input" class="sr-only">Search resources</label>
+              <input
+                type="text"
+                id="library-search-input"
+                class="form-control"
+                placeholder="Search subject, title, or topic..."
+              >
+            </div>
+
+            <div class="toolbar-controls">
+              <div class="sort-select-wrapper">
+                <label for="sort-by-select">Sort by:</label>
+                <select id="sort-by-select" class="form-control sort-select">
+                  <option value="recent">Most Recent</option>
+                  <option value="popular">Most Popular</option>
+                  <option value="title_asc">Title (A to Z)</option>
+                  <option value="title_desc">Title (Z to A)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Active Filter Tags Bar -->
+          <div id="active-filters-bar" class="active-filters-bar" style="display: none;">
+            <!-- Rendered by resources.js -->
+          </div>
+
+          <!-- Results Count Indicator -->
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-4);">
+            <div id="results-count-text" style="font-size: var(--font-size-sm); color: var(--color-gray-600); font-weight: 500;">
+              Showing all materials
+            </div>
+          </div>
+
+          <!-- Resource Cards Grid -->
+          <div id="resources-grid-container" class="resource-grid" aria-live="polite">
+            <!-- Rendered dynamically -->
+          </div>
+
+          <!-- Pagination -->
+          <nav id="resources-pagination" class="pagination" aria-label="Resource pages" style="display: none;">
+            <!-- Rendered dynamically -->
+          </nav>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand-col">
+          <div class="footer-brand">
+            <div class="brand-icon">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/></svg>
+            </div>
+            <span>EduConnect</span>
+          </div>
+          <p>
+            An open educational technology platform built as a student Community Service Project (CSP) to provide seamless access to peer-shared academic resources.
+          </p>
+        </div>
+        <div>
+          <h4 class="footer-heading">Quick Navigation</h4>
+          <ul class="footer-links">
+            <li><a href="index.html" class="footer-link">Home</a></li>
+            <li><a href="resources.html" class="footer-link">Resource Library</a></li>
+            <li><a href="upload.html" class="footer-link">Upload Resource</a></li>
+            <li><a href="bookmarks.html" class="footer-link">Saved Bookmarks</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer-heading">Categories</h4>
+          <ul class="footer-links">
+            <li><a href="resources.html?category=notes" class="footer-link">Subject Notes</a></li>
+            <li><a href="resources.html?category=qp" class="footer-link">Question Papers</a></li>
+            <li><a href="resources.html?category=lab" class="footer-link">Lab Manuals</a></li>
+            <li><a href="resources.html?category=prog" class="footer-link">Programming</a></li>
+            <li><a href="resources.html?category=tutorials" class="footer-link">Tutorials</a></li>
+          </ul>
+        </div>
+        <div>
+          <span class="footer-mission-badge">CSP Mission</span>
+          <h4 class="footer-heading">Learn Together. Grow Together.</h4>
+          <p class="footer-mission-text">
+            EduConnect is dedicated to equalizing educational access across student cohorts through peer collaboration and structured knowledge sharing.
+          </p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; 2026 EduConnect — College Community Service Project. All rights reserved.</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/components.js"></script>
+  <script src="js/navigation.js"></script>
+  <script src="js/resources.js"></script>
+</body>
+</html>

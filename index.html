@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="EduConnect - College Learning Resource Sharing Portal. Discover, share, and access academic subject notes, previous question papers, lab manuals, and tutorials.">
+  <title>EduConnect — College Learning Resource Sharing Portal</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+
+  <!-- Inter Font from Google Fonts with System Fallback -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Core Stylesheets -->
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/forms.css">
+  <link rel="stylesheet" href="css/home.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+  <!-- Skip Navigation for Accessibility -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- Shared Header -->
+  <header class="site-header" role="banner">
+    <div class="container header-container">
+      <!-- Brand Logo -->
+      <a href="index.html" class="brand" aria-label="EduConnect Home">
+        <div class="brand-icon">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/></svg>
+        </div>
+        <div class="brand-text">
+          <span class="brand-name">Edu<span>Connect</span></span>
+          <span class="brand-tagline-header">Learn Together. Grow Together.</span>
+        </div>
+      </a>
+
+      <!-- Desktop Navigation -->
+      <nav class="desktop-nav" role="navigation" aria-label="Primary Navigation">
+        <ul class="nav-list">
+          <li><a href="index.html" class="nav-link active">Home</a></li>
+          <li><a href="resources.html" class="nav-link">Resource Library</a></li>
+          <li><a href="upload.html" class="nav-link">Upload Resource</a></li>
+          <li><a href="about.html" class="nav-link">About</a></li>
+          <li><a href="contact.html" class="nav-link">Contact</a></li>
+        </ul>
+
+        <!-- Dynamic Auth Buttons Container -->
+        <div class="auth-nav" id="desktop-auth-container">
+          <a href="login.html" class="btn btn-outline btn-sm">Sign In</a>
+          <a href="register.html" class="btn btn-primary btn-sm">Join EduConnect</a>
+        </div>
+      </nav>
+
+      <!-- Mobile Hamburger Toggle -->
+      <button type="button" class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Open mobile navigation menu" aria-expanded="false" aria-controls="mobile-drawer">
+        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer Overlay & Menu -->
+  <div class="mobile-nav-overlay" id="mobile-nav-overlay"></div>
+  <aside class="mobile-drawer" id="mobile-drawer" aria-label="Mobile Navigation Drawer">
+    <div class="mobile-drawer-header">
+      <div class="brand">
+        <span class="brand-name">Edu<span>Connect</span></span>
+      </div>
+      <button type="button" class="mobile-drawer-close" id="mobile-drawer-close" aria-label="Close menu">
+        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="mobile-drawer-body">
+      <ul class="mobile-nav-list">
+        <li><a href="index.html" class="mobile-nav-link active">Home</a></li>
+        <li><a href="resources.html" class="mobile-nav-link">Resource Library</a></li>
+        <li><a href="upload.html" class="mobile-nav-link">Upload Resource</a></li>
+        <li><a href="about.html" class="mobile-nav-link">About</a></li>
+        <li><a href="contact.html" class="mobile-nav-link">Contact</a></li>
+      </ul>
+      <div class="mobile-drawer-auth" id="mobile-auth-container">
+        <a href="login.html" class="btn btn-outline">Sign In</a>
+        <a href="register.html" class="btn btn-primary">Join EduConnect</a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content Shell -->
+  <main id="main-content">
+    <!-- SECTION 2: Hero Section -->
+    <section class="hero-section" aria-labelledby="hero-heading">
+      <div class="container hero-grid">
+        <div class="hero-content">
+          <div class="hero-badge">
+            <span class="hero-badge-dot"></span>
+            <span>College Community Service Project (CSP)</span>
+          </div>
+          <h1 id="hero-heading" class="hero-title">
+            Your Learning Resources, <span class="hero-title-accent">All in One Place.</span>
+          </h1>
+          <p class="hero-subtitle">
+            Discover notes, previous question papers, lab manuals, tutorials, and study materials shared by your learning community.
+          </p>
+
+          <div class="hero-actions">
+            <a href="resources.html" class="btn btn-primary btn-lg">
+              <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+              Explore Resources
+            </a>
+            <button type="button" class="btn btn-outline btn-lg" id="hero-share-btn">
+              <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+              Share a Resource
+            </button>
+          </div>
+
+          <!-- SECTION 3: Resource Search within Hero -->
+          <div class="hero-search-area">
+            <form id="hero-search-form" class="hero-search-wrapper" role="search" aria-label="Quick resource search">
+              <div class="hero-search-icon">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+              </div>
+              <label for="hero-search-input" class="sr-only">Search learning resources</label>
+              <input
+                type="text"
+                id="hero-search-input"
+                class="hero-search-input"
+                placeholder="Search notes, subjects, question papers, or topics..."
+                autocomplete="off"
+              >
+              <button type="button" id="hero-search-clear" class="btn btn-ghost btn-sm" aria-label="Clear search input" style="display: none;">&times;</button>
+              <button type="submit" class="btn btn-primary btn-sm">Search</button>
+            </form>
+            <div class="hero-search-tags" aria-label="Popular search topics">
+              <span>Popular:</span>
+              <button type="button" class="search-tag-chip" data-query="DBMS">DBMS</button>
+              <button type="button" class="search-tag-chip" data-query="Operating Systems">Operating Systems</button>
+              <button type="button" class="search-tag-chip" data-query="Data Structures">Data Structures</button>
+              <button type="button" class="search-tag-chip" data-query="Computer Networks">Networks</button>
+              <button type="button" class="search-tag-chip" data-query="Spring Boot">Spring Boot</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hero Graphic Illustration -->
+        <div class="hero-visual" aria-hidden="true">
+          <div class="hero-card-stack">
+            <img src="assets/images/hero-illustration.svg" alt="Students discovering organized academic materials" width="540" height="400">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: Browse by Category -->
+    <section class="section" aria-labelledby="categories-heading">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-badge">Academic Categories</span>
+          <h2 id="categories-heading" class="section-title">Browse by Category</h2>
+          <p class="section-subtitle">
+            Find exactly what you need for class preparation, examinations, and laboratory experiments.
+          </p>
+        </div>
+
+        <div class="category-grid">
+          <!-- 1. Subject Notes -->
+          <a href="resources.html?category=notes" class="category-card cat-notes-theme">
+            <div class="category-icon-wrapper">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+            </div>
+            <h3 class="category-title">Subject Notes</h3>
+            <p class="category-desc">Comprehensive chapter-wise lecture notes and study summaries curated by peers and top performers.</p>
+            <span class="category-action-link">
+              Explore Notes
+              <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            </span>
+          </a>
+
+          <!-- 2. Previous Question Papers -->
+          <a href="resources.html?category=qp" class="category-card cat-qp-theme">
+            <div class="category-icon-wrapper">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+            </div>
+            <h3 class="category-title">Previous Question Papers</h3>
+            <p class="category-desc">University semester exam archives, mid-term test papers, and model answers to master recurring concepts.</p>
+            <span class="category-action-link">
+              View Papers
+              <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            </span>
+          </a>
+
+          <!-- 3. Lab Manuals -->
+          <a href="resources.html?category=lab" class="category-card cat-lab-theme">
+            <div class="category-icon-wrapper">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
+            </div>
+            <h3 class="category-title">Lab Manuals</h3>
+            <p class="category-desc">Practical experiment write-ups, observation guidelines, sample viva questions, and execution setups.</p>
+            <span class="category-action-link">
+              Access Manuals
+              <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            </span>
+          </a>
+
+          <!-- 4. Programming Resources -->
+          <a href="resources.html?category=prog" class="category-card cat-prog-theme">
+            <div class="category-icon-wrapper">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+            </div>
+            <h3 class="category-title">Programming Resources</h3>
+            <p class="category-desc">Code walkthroughs, DSA implementations, cheat sheets, framework guides, and project templates.</p>
+            <span class="category-action-link">
+              Browse Code
+              <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            </span>
+          </a>
+
+          <!-- 5. Tutorials & Reference -->
+          <a href="resources.html?category=tutorials" class="category-card cat-tut-theme">
+            <div class="category-icon-wrapper">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+            </div>
+            <h3 class="category-title">Tutorials & Reference Materials</h3>
+            <p class="category-desc">Self-paced guides, standard reference textbook notes, formula handbooks, and topic deep-dives.</p>
+            <span class="category-action-link">
+              Explore Tutorials
+              <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            </span>
+          </a>
+
+          <!-- 6. Other Study Materials -->
+          <a href="resources.html?category=other" class="category-card cat-other-theme">
+            <div class="category-icon-wrapper">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 19a2 2 0 01-2-2V7a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1M5 19h14a2 2 0 002-2v-5a2 2 0 00-2-2H9a2 2 0 00-2 2v5a2 2 0 01-2 2z"/></svg>
+            </div>
+            <h3 class="category-title">Other Study Materials</h3>
+            <p class="category-desc">Syllabus copies, project reports, presentation slides, and academic seminar reference papers.</p>
+            <span class="category-action-link">
+              View Materials
+              <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            </span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: How EduConnect Works -->
+    <section class="section" style="background-color: var(--color-white); border-top: 1px solid var(--color-gray-200); border-bottom: 1px solid var(--color-gray-200);" aria-labelledby="workflow-heading">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-badge">Simple 3-Step Process</span>
+          <h2 id="workflow-heading" class="section-title">How EduConnect Works</h2>
+          <p class="section-subtitle">
+            An open, student-powered cycle of learning, downloading, and contributing.
+          </p>
+        </div>
+
+        <div class="workflow-grid">
+          <!-- Step 1 -->
+          <div class="workflow-card">
+            <div class="workflow-step-num">1</div>
+            <div class="workflow-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+            </div>
+            <h3 class="workflow-title">Explore</h3>
+            <p class="workflow-desc">
+              Find learning materials by subject, department, and semester. Filter by specific academic categories or search topics with ease.
+            </p>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="workflow-card">
+            <div class="workflow-step-num">2</div>
+            <div class="workflow-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+            </div>
+            <h3 class="workflow-title">Learn</h3>
+            <p class="workflow-desc">
+              Preview documents directly or download verified PDF materials, lab manuals, and exam archives to revise at your own pace.
+            </p>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="workflow-card">
+            <div class="workflow-step-num">3</div>
+            <div class="workflow-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+            </div>
+            <h3 class="workflow-title">Share</h3>
+            <p class="workflow-desc">
+              Contribute your own well-organized notes and reference documents to help your classmates and fellow juniors succeed.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 6: Recently Added Resources -->
+    <section class="section" aria-labelledby="recent-heading">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-badge">Latest Contributions</span>
+          <h2 id="recent-heading" class="section-title">Recently Added Resources</h2>
+          <p class="section-subtitle">
+            Freshly verified study materials submitted by community contributors.
+          </p>
+        </div>
+
+        <!-- Dynamic Resource Grid Container -->
+        <div id="recent-resources-grid" class="resource-grid" aria-live="polite">
+          <!-- Populated via home.js -->
+        </div>
+
+        <div style="text-align: center; margin-top: var(--spacing-10);">
+          <a href="resources.html" class="btn btn-outline btn-lg">
+            View All Resources in Library
+            <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 7: Why Use EduConnect? -->
+    <section class="section" style="background-color: var(--color-white); border-top: 1px solid var(--color-gray-200); border-bottom: 1px solid var(--color-gray-200);" aria-labelledby="benefits-heading">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-badge">Platform Value</span>
+          <h2 id="benefits-heading" class="section-title">Why Use EduConnect?</h2>
+          <p class="section-subtitle">
+            Designed to address the real-world friction college students face when finding academic materials.
+          </p>
+        </div>
+
+        <div class="benefits-grid">
+          <div class="benefit-item">
+            <div class="benefit-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+            </div>
+            <div>
+              <h3 class="benefit-title">Organized Learning Materials</h3>
+              <p class="benefit-desc">No more lost links in messy group chats. Everything is structured by department, semester, and subject.</p>
+            </div>
+          </div>
+
+          <div class="benefit-item">
+            <div class="benefit-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+            </div>
+            <div>
+              <h3 class="benefit-title">Easier Resource Discovery</h3>
+              <p class="benefit-desc">Instant keyword searches, instant category filters, and clear labels make finding relevant papers rapid.</p>
+            </div>
+          </div>
+
+          <div class="benefit-item">
+            <div class="benefit-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+            </div>
+            <div>
+              <h3 class="benefit-title">Peer-to-Peer Knowledge Sharing</h3>
+              <p class="benefit-desc">Encourages seniors and classmates to pass down high-quality notes to upcoming semesters.</p>
+            </div>
+          </div>
+
+          <div class="benefit-item">
+            <div class="benefit-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+            </div>
+            <div>
+              <h3 class="benefit-title">Moderated for Quality</h3>
+              <p class="benefit-desc">Community service admin review ensures that submitted files are relevant, legible, and safe.</p>
+            </div>
+          </div>
+
+          <div class="benefit-item">
+            <div class="benefit-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+            </div>
+            <div>
+              <h3 class="benefit-title">Cross-Device Responsive</h3>
+              <p class="benefit-desc">Works smoothly on mobile phones, tablets, laptops, and college lab desktops without distortion.</p>
+            </div>
+          </div>
+
+          <div class="benefit-item">
+            <div class="benefit-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </div>
+            <div>
+              <h3 class="benefit-title">Personal Bookmarks</h3>
+              <p class="benefit-desc">Save frequently visited subject notes and lab manuals with one click for swift revision before exams.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 8: Community Call to Action -->
+    <section class="section">
+      <div class="container">
+        <div class="cta-banner">
+          <h2>Have Useful Study Materials?</h2>
+          <p>
+            Share suitable academic resources, solved question papers, and lab manuals to help other students learn and grow together.
+          </p>
+          <div class="cta-buttons">
+            <a href="upload.html" class="btn btn-secondary btn-lg">
+              <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+              Contribute a Resource
+            </a>
+            <a href="resources.html" class="btn btn-outline btn-lg" style="background-color: transparent; color: #fff; border-color: rgba(255,255,255,0.4);">
+              Explore the Library
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- SECTION 9: Shared Footer -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-grid">
+        <!-- Brand & Description -->
+        <div class="footer-brand-col">
+          <div class="footer-brand">
+            <div class="brand-icon">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/></svg>
+            </div>
+            <span>EduConnect</span>
+          </div>
+          <p>
+            An open educational technology platform built as a student Community Service Project (CSP) to provide seamless access to peer-shared academic resources.
+          </p>
+        </div>
+
+        <!-- Quick Navigation -->
+        <div>
+          <h4 class="footer-heading">Quick Navigation</h4>
+          <ul class="footer-links">
+            <li><a href="index.html" class="footer-link">Home</a></li>
+            <li><a href="resources.html" class="footer-link">Resource Library</a></li>
+            <li><a href="upload.html" class="footer-link">Upload Resource</a></li>
+            <li><a href="bookmarks.html" class="footer-link">Saved Bookmarks</a></li>
+          </ul>
+        </div>
+
+        <!-- Academic Resource Categories -->
+        <div>
+          <h4 class="footer-heading">Categories</h4>
+          <ul class="footer-links">
+            <li><a href="resources.html?category=notes" class="footer-link">Subject Notes</a></li>
+            <li><a href="resources.html?category=qp" class="footer-link">Question Papers</a></li>
+            <li><a href="resources.html?category=lab" class="footer-link">Lab Manuals</a></li>
+            <li><a href="resources.html?category=prog" class="footer-link">Programming</a></li>
+            <li><a href="resources.html?category=tutorials" class="footer-link">Tutorials</a></li>
+          </ul>
+        </div>
+
+        <!-- Project Mission -->
+        <div>
+          <span class="footer-mission-badge">CSP Mission</span>
+          <h4 class="footer-heading">Learn Together. Grow Together.</h4>
+          <p class="footer-mission-text">
+            EduConnect is dedicated to equalizing educational access across student cohorts through peer collaboration and structured knowledge sharing.
+          </p>
+          <div style="margin-top: 12px;">
+            <a href="about.html" class="footer-link" style="color: var(--color-accent-300); font-weight: 600;">Learn more about our CSP purpose &rarr;</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>
+          &copy; 2026 EduConnect — College Community Service Project. All rights reserved.
+        </div>
+        <div>
+          Designed for presentation & open peer educational collaboration.
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/components.js"></script>
+  <script src="js/navigation.js"></script>
+  <script src="js/home.js"></script>
+</body>
+</html>

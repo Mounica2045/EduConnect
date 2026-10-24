@@ -1,0 +1,106 @@
+/* ==========================================================================
+   EduConnect - Responsive Styles & Breakpoints
+   Author: Senior Frontend Developer (CSP Team)
+   ========================================================================== */
+
+/* Universal Responsive Overrides */
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+}
+
+/* Touch targets for mobile navigation and interactive buttons */
+@media (max-width: 768px) {
+  .btn {
+    min-height: 42px;
+  }
+  
+  .bookmark-btn {
+    width: 38px;
+    height: 38px;
+  }
+
+  .nav-link,
+  .mobile-nav-link {
+    min-height: 44px;
+  }
+}
+
+/* Extra Small Screens (320px - 480px) */
+@media (max-width: 480px) {
+  :root {
+    --header-height: 64px;
+    --font-size-4xl: 1.875rem;
+    --font-size-3xl: 1.5rem;
+    --font-size-2xl: 1.25rem;
+  }
+
+  .hero-section {
+    padding: var(--spacing-10) 0 var(--spacing-12);
+  }
+
+  .hero-title {
+    font-size: 2rem;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .hero-actions .btn {
+    width: 100%;
+  }
+
+  .hero-search-wrapper {
+    flex-direction: column;
+    padding: var(--spacing-3);
+  }
+
+  .hero-search-wrapper .btn {
+    width: 100%;
+  }
+
+  .auth-card {
+    padding: var(--spacing-5);
+  }
+
+  .details-meta-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .modal-dialog {
+    margin: var(--spacing-2);
+    width: calc(100% - var(--spacing-4));
+  }
+}
+
+/* Small Tablets and Large Mobiles (481px - 768px) */
+@media (min-width: 481px) and (max-width: 768px) {
+  .hero-actions {
+    justify-content: flex-start;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .site-header,
+  .site-footer,
+  .bookmark-btn,
+  .btn-primary,
+  .hero-search-wrapper,
+  .toast-container {
+    display: none !important;
+  }
+
+  body {
+    background-color: #fff !important;
+    color: #000 !important;
+  }
+
+  .resource-card,
+  .details-main-card {
+    box-shadow: none !important;
+    border: 1px solid #ccc !important;
+  }
+}

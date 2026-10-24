@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="View and manage your EduConnect student profile, contribution history, and academic preferences.">
+  <title>Student Profile — EduConnect</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+
+  <!-- Inter Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Core Stylesheets -->
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/forms.css">
+  <link rel="stylesheet" href="css/resources.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="site-header" role="banner">
+    <div class="container header-container">
+      <a href="index.html" class="brand" aria-label="EduConnect Home">
+        <div class="brand-icon">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/></svg>
+        </div>
+        <div class="brand-text">
+          <span class="brand-name">Edu<span>Connect</span></span>
+          <span class="brand-tagline-header">Learn Together. Grow Together.</span>
+        </div>
+      </a>
+
+      <nav class="desktop-nav" role="navigation" aria-label="Primary Navigation">
+        <ul class="nav-list">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="resources.html" class="nav-link">Resource Library</a></li>
+          <li><a href="upload.html" class="nav-link">Upload Resource</a></li>
+          <li><a href="about.html" class="nav-link">About</a></li>
+          <li><a href="contact.html" class="nav-link">Contact</a></li>
+        </ul>
+        <div class="auth-nav" id="desktop-auth-container"></div>
+      </nav>
+
+      <button type="button" class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Open mobile navigation menu" aria-expanded="false" aria-controls="mobile-drawer">
+        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <div class="mobile-nav-overlay" id="mobile-nav-overlay"></div>
+  <aside class="mobile-drawer" id="mobile-drawer" aria-label="Mobile Navigation Drawer">
+    <div class="mobile-drawer-header">
+      <div class="brand"><span class="brand-name">Edu<span>Connect</span></span></div>
+      <button type="button" class="mobile-drawer-close" id="mobile-drawer-close" aria-label="Close menu">&times;</button>
+    </div>
+    <div class="mobile-drawer-body">
+      <ul class="mobile-nav-list">
+        <li><a href="index.html" class="mobile-nav-link">Home</a></li>
+        <li><a href="resources.html" class="mobile-nav-link">Resource Library</a></li>
+        <li><a href="upload.html" class="mobile-nav-link">Upload Resource</a></li>
+        <li><a href="about.html" class="mobile-nav-link">About</a></li>
+        <li><a href="contact.html" class="mobile-nav-link">Contact</a></li>
+      </ul>
+      <div class="mobile-drawer-auth" id="mobile-auth-container"></div>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main id="main-content" class="section-sm">
+    <div class="container">
+      <!-- Breadcrumbs -->
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <span class="breadcrumb-item"><a href="index.html">Home</a></span>
+        <span class="breadcrumb-separator">/</span>
+        <span class="breadcrumb-current">Student Profile</span>
+      </nav>
+
+      <div class="profile-grid">
+        <!-- Sidebar Profile Summary -->
+        <aside class="profile-sidebar-card">
+          <div class="profile-avatar-large" id="profile-avatar-circle">U</div>
+          <h2 id="profile-display-name" style="font-size: var(--font-size-xl); margin-bottom: 4px;">Student User</h2>
+          <div id="profile-display-email" style="font-size: var(--font-size-sm); color: var(--color-gray-500); margin-bottom: 12px;">student@college.edu</div>
+          
+          <div id="profile-role-badge" style="display: inline-block; padding: 3px 10px; background-color: var(--color-primary-50); border: 1px solid var(--color-primary-200); color: var(--color-primary-800); border-radius: var(--radius-full); font-size: var(--font-size-xs); font-weight: 600; margin-bottom: 24px;">
+            College Student
+          </div>
+
+          <div style="display: flex; justify-content: space-around; padding: var(--spacing-4) 0; border-top: 1px solid var(--color-gray-200); border-bottom: 1px solid var(--color-gray-200); margin-bottom: 24px;">
+            <div>
+              <div id="stat-uploads-count" style="font-size: var(--font-size-xl); font-weight: 700; color: var(--color-gray-900);">0</div>
+              <div style="font-size: var(--font-size-xs); color: var(--color-gray-500);">Uploads</div>
+            </div>
+            <div>
+              <div id="stat-bookmarks-count" style="font-size: var(--font-size-xl); font-weight: 700; color: var(--color-gray-900);">0</div>
+              <div style="font-size: var(--font-size-xs); color: var(--color-gray-500);">Bookmarks</div>
+            </div>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: var(--spacing-2);">
+            <a href="upload.html" class="btn btn-primary btn-sm" style="width: 100%;">
+              <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+              Upload New Resource
+            </a>
+            <a href="bookmarks.html" class="btn btn-outline btn-sm" style="width: 100%;">
+              <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
+              View Saved Bookmarks
+            </a>
+            <button type="button" class="btn btn-outline btn-sm" id="profile-logout-btn" style="width: 100%; color: var(--color-danger-main); margin-top: 8px;">
+              Sign Out
+            </button>
+          </div>
+        </aside>
+
+        <!-- Main Tabbed Panel -->
+        <section aria-label="Profile tabs and content">
+          <div class="profile-tabs-nav" role="tablist">
+            <button type="button" class="profile-tab-btn is-active" id="tab-btn-uploads" role="tab" aria-selected="true" aria-controls="tab-content-uploads">
+              My Uploaded Resources
+            </button>
+            <button type="button" class="profile-tab-btn" id="tab-btn-details" role="tab" aria-selected="false" aria-controls="tab-content-details">
+              Account Details & Preferences
+            </button>
+          </div>
+
+          <!-- Tab 1: My Uploads -->
+          <div id="tab-content-uploads" role="tabpanel" aria-labelledby="tab-btn-uploads">
+            <div id="user-uploads-container">
+              <!-- Rendered dynamically -->
+            </div>
+          </div>
+
+          <!-- Tab 2: Account Details & Edit Profile -->
+          <div id="tab-content-details" role="tabpanel" aria-labelledby="tab-btn-details" style="display: none;">
+            <div class="auth-card" style="max-width: 100%; box-shadow: var(--shadow-sm);">
+              <form id="edit-profile-form" novalidate>
+                <div class="form-group">
+                  <label for="edit-name" class="form-label form-label-required">Full Name</label>
+                  <input type="text" id="edit-name" name="fullName" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                  <label for="edit-email" class="form-label">College Email Address</label>
+                  <input type="email" id="edit-email" name="email" class="form-control" readonly disabled>
+                  <span class="form-hint">Email address cannot be modified once registered for CSP academic records.</span>
+                </div>
+
+                <div class="form-row form-row-2">
+                  <div class="form-group">
+                    <label for="edit-dept" class="form-label form-label-required">Department</label>
+                    <select id="edit-dept" name="department" class="form-control" required>
+                      <!-- Options populated by JS -->
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="edit-sem" class="form-label form-label-required">Semester</label>
+                    <select id="edit-sem" name="semester" class="form-control" required>
+                      <!-- Options populated by JS -->
+                    </select>
+                  </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary" id="save-profile-btn">
+                  Save Changes
+                </button>
+              </form>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="container" style="text-align: center;">
+      <p style="color: var(--color-gray-400); font-size: 0.8125rem;">
+        EduConnect Community Service Project &bull; College Learning Resource Sharing Portal
+      </p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/components.js"></script>
+  <script src="js/navigation.js"></script>
+  <script src="js/profile.js"></script>
+</body>
+</html>
