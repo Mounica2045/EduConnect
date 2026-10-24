@@ -17,7 +17,13 @@ yarn-debug.log*
 yarn-error.log*
 scratch/
 
-# Build & Dependency folders (if added in future)
+# Build & Dependency folders
 node_modules/
 dist/
 build/
+target/
+*.class
+*.jar
+*.war
+uploads/
+

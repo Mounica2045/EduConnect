@@ -1,6 +1,7 @@
 package com.educonnect.config;
 
 import com.educonnect.security.CustomUserDetailsService;
+import com.educonnect.security.JwtAccessDeniedHandler;
 import com.educonnect.security.JwtAuthenticationEntryPoint;
 import com.educonnect.security.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
@@ -30,17 +31,20 @@ public class SecurityConfig {
 
     private final CustomUserDetailsService userDetailsService;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+    private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final CorsConfigurationSource corsConfigurationSource;
 
     public SecurityConfig(
             CustomUserDetailsService userDetailsService,
             JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint,
+            JwtAccessDeniedHandler jwtAccessDeniedHandler,
             JwtAuthenticationFilter jwtAuthenticationFilter,
             CorsConfigurationSource corsConfigurationSource
     ) {
         this.userDetailsService = userDetailsService;
         this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;
+        this.jwtAccessDeniedHandler = jwtAccessDeniedHandler;
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
         this.corsConfigurationSource = corsConfigurationSource;
     }
@@ -72,8 +76,11 @@ public class SecurityConfig {
                 // CSRF is disabled for stateless REST APIs utilizing Bearer token authentication
                 .csrf(AbstractHttpConfigurer::disable)
 
-                // Standardized 401 response for unauthenticated calls
-                .exceptionHandling(exception -> exception.authenticationEntryPoint(jwtAuthenticationEntryPoint))
+                // Standardized 401 & 403 responses for security exceptions
+                .exceptionHandling(exception -> exception
+                        .authenticationEntryPoint(jwtAuthenticationEntryPoint)
+                        .accessDeniedHandler(jwtAccessDeniedHandler)
+                )
 
                 // Stateless session management (No HTTP sessions stored server-side)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -81,22 +88,28 @@ public class SecurityConfig {
                 // Authorization rules
                 .authorizeHttpRequests(auth -> auth
                         // Public authentication endpoints
-                        .requestMatchers("/api/auth/register", "/api/auth/login").permitAll()
-
-                        // Public resource exploration endpoints (Read-only)
-                        .requestMatchers(HttpMethod.GET, "/api/resources/**").permitAll()
+                        .requestMatchers("/api/auth/register", "/api/auth/login", "/api/auth/logout").permitAll()
 
                         // Public contact submission
                         .requestMatchers(HttpMethod.POST, "/api/contact").permitAll()
 
+                        // Authenticated resource endpoints (must precede GET wildcard permitAll)
+                        .requestMatchers("/api/resources/mine").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/api/resources/**").authenticated()
+                        .requestMatchers(HttpMethod.PUT, "/api/resources/**").authenticated()
+                        .requestMatchers(HttpMethod.DELETE, "/api/resources/**").authenticated()
+                        .requestMatchers(HttpMethod.PATCH, "/api/resources/*/approve", "/api/resources/*/reject").hasRole("ADMIN")
+
                         // Admin-only endpoints
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
 
-                        // Authenticated student & member endpoints
+                        // Authenticated user & bookmark endpoints
                         .requestMatchers("/api/auth/me", "/api/auth/logout").authenticated()
                         .requestMatchers("/api/users/me").authenticated()
-                        .requestMatchers(HttpMethod.POST, "/api/resources/**").authenticated()
                         .requestMatchers("/api/bookmarks/**").authenticated()
+
+                        // Public resource exploration endpoints (Read-only browsing, search, details, download)
+                        .requestMatchers(HttpMethod.GET, "/api/resources/**").permitAll()
 
                         // Default rule: all other endpoints require authentication
                         .anyRequest().authenticated()

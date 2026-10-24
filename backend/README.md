@@ -1,7 +1,7 @@
-# EduConnect — Backend Authentication & Security Module (Member 2)
+# EduConnect — Backend Services (Members 2 & 3)
 > **College Learning Resource Sharing Portal — Community Service Project (CSP)**  
 > **Package:** `com.educonnect`  
-> **Role:** Member 2 (Login, Registration, Authentication, RBAC, and Security Architecture)
+> **Modules:** Member 2 (Authentication & Security) & Member 3 (Resource Management & Search APIs)
 
 ---
 
@@ -177,7 +177,118 @@ CREATE INDEX idx_users_email ON users(email);
 
 ---
 
-## 5. Environment Variables & Setup
+## 5. Educational Resource Management & Search APIs (Member 3)
+
+### 1. Database Design (`resources` Table)
+
+```sql
+CREATE TABLE IF NOT EXISTS resources (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(200) NOT NULL,
+    description TEXT,
+    subject VARCHAR(100) NOT NULL,
+    department VARCHAR(100) NOT NULL,
+    semester VARCHAR(50),
+    category VARCHAR(50) NOT NULL DEFAULT 'NOTES',
+    file_name VARCHAR(255),
+    file_location VARCHAR(500),
+    file_type VARCHAR(50) DEFAULT 'PDF',
+    file_size BIGINT,
+    external_url VARCHAR(500),
+    uploaded_by_id BIGINT,
+    status VARCHAR(30) NOT NULL DEFAULT 'PENDING',
+    download_count INT NOT NULL DEFAULT 0,
+    tags VARCHAR(255),
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT fk_resources_users FOREIGN KEY (uploaded_by_id) REFERENCES users(id) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE INDEX idx_resources_status_created ON resources(status, created_at);
+CREATE INDEX idx_resources_category ON resources(category);
+CREATE INDEX idx_resources_department ON resources(department);
+CREATE INDEX idx_resources_semester ON resources(semester);
+CREATE INDEX idx_resources_subject ON resources(subject);
+CREATE INDEX idx_resources_uploader ON resources(uploaded_by_id);
+```
+
+### 2. Resource Management Endpoints
+
+| Method | Endpoint | Access | Description |
+| :--- | :--- | :--- | :--- |
+| `GET` | `/api/resources` | Public | Multi-criteria faceted search, filter, paginate, and sort approved materials |
+| `GET` | `/api/resources/recent` | Public | Retrieves latest approved resources (e.g. for homepage cards) |
+| `GET` | `/api/resources/categories` | Public | Returns complete taxonomy of resource categories with UI badges |
+| `GET` | `/api/resources/category/{slug}` | Public | Browse resources filtered by category slug (`notes`, `qp`, `lab`, `prog`, etc.) |
+| `GET` | `/api/resources/subject/{subject}` | Public | Browse resources by subject course name |
+| `GET` | `/api/resources/{id}` | Public* | Single resource details (*approved only; owner/admin can view pending/rejected) |
+| `GET` | `/api/resources/{id}/download` | Public* | Streams document file download with `Content-Disposition` attachment |
+| `GET` | `/api/resources/mine` | Authenticated | Retrieves current authenticated student's uploaded materials |
+| `POST` | `/api/resources` | Authenticated | Creates a new resource with multipart file upload (`25MB` max) or JSON external URL |
+| `PUT` | `/api/resources/{id}` | Authenticated | Updates resource metadata (owner or admin only) |
+| `DELETE` | `/api/resources/{id}` | Authenticated | Deletes resource and removes stored file from disk (owner or admin only) |
+| `PATCH` | `/api/resources/{id}/approve` | Admin Only | Approves pending resource for public library publication |
+| `PATCH` | `/api/resources/{id}/reject` | Admin Only | Rejects resource from publication |
+| `GET` | `/api/admin/resources` | Admin Only | Administrative moderation queue and management feed |
+
+### 3. Multi-Criteria Search & Filtering (`GET /api/resources`)
+
+Supports dynamic combination of:
+- `q`: Search keyword across `title`, `description`, `subject`, `department`, and `tags`.
+- `category`: Category slug (`notes`, `qp`, `lab`, `prog`, `tutorials`, `other`).
+- `department`: Department name (e.g. `Computer Science & Engineering`).
+- `semester`: Semester level (e.g. `Semester 4`).
+- `subject`: Course name (e.g. `Data Structures`).
+- `fileType`: Document format (e.g. `PDF`, `DOCX`, `ZIP`).
+- `sort`: `recent` (default), `popular` (by download count), `title_asc`, `title_desc`.
+- `page`: 0-indexed page number (default 0).
+- `size`: Items per page (default 6).
+
+**Example Response:**
+```json
+{
+  "content": [
+    {
+      "id": 1,
+      "title": "Data Structures & Algorithms Comprehensive Notes",
+      "description": "Complete handwritten and digital notes covering Trees, Graphs, and DP.",
+      "subject": "Data Structures",
+      "department": "Computer Science & Engineering",
+      "semester": "Semester 3",
+      "category": "notes",
+      "categoryLabel": "Subject Notes",
+      "badgeClass": "badge-notes",
+      "fileName": "DSA_Notes.pdf",
+      "fileType": "PDF",
+      "fileSize": "4.5 MB",
+      "fileSizeBytes": 4718592,
+      "downloadCount": 142,
+      "status": "APPROVED",
+      "approved": true,
+      "contributorName": "Aarav Sharma",
+      "uploadDate": "2026-10-24T18:22:45.000Z"
+    }
+  ],
+  "page": 0,
+  "size": 6,
+  "totalElements": 5,
+  "totalPages": 1,
+  "first": true,
+  "last": true
+}
+```
+
+### 4. File Upload & Validation Rules
+
+- **Allowed Formats:** `.pdf`, `.docx`, `.doc`, `.pptx`, `.ppt`, `.zip`, `.txt`
+- **Max File Size:** `25 MB` (enforced at both Spring Boot servlet level and service layer)
+- **Path Traversal Protection:** Filenames are sanitized via `StringUtils.cleanPath()` and reject any directory traversal patterns (`..`).
+- **Collision-Resistant Storage:** Stored with generated UUID prefix (`UUID_sanitized_name`).
+- **Moderation Workflow:** Student uploads enter `PENDING` status. Faculty/Administrator uploads are automatically marked `APPROVED`.
+
+---
+
+## 6. Environment Variables & Setup
 
 Create the MySQL database in your local MySQL instance:
 
@@ -197,51 +308,40 @@ CREATE DATABASE educonnect_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 | `JWT_SECRET` | *(Pre-configured 256-bit key)* | HMAC-SHA256 Signing Secret |
 | `JWT_EXPIRATION_MS` | `86400000` (24h) | Token lifespan in milliseconds |
 | `CORS_ALLOWED_ORIGINS`| `http://localhost:3000,...` | Comma-separated frontend origins |
+| `UPLOAD_DIR` | `uploads/resources` | Document storage directory on server |
 | `ADMIN_EMAIL` | `admin@college.edu` | Initial admin account email |
 | `ADMIN_PASSWORD` | `AdminPassword123!` | Initial admin account password |
 
 ---
 
-## 6. How to Build & Run
+## 7. How to Build & Run
 
-### A. Run with Maven
+### A. Run with Maven Wrapper
 ```powershell
 cd backend
-mvn clean spring-boot:run
+.\mvnw.cmd spring-boot:run
 ```
 
-### B. Run Automated Test Suite
+### B. Run Automated Test Suite (All 34 Tests)
 All tests execute against an isolated in-memory H2 database:
 ```powershell
 cd backend
-mvn test
+.\mvnw.cmd test
 ```
 
 ### C. Build Production JAR
 ```powershell
 cd backend
-mvn clean package -DskipTests
+.\mvnw.cmd clean package -DskipTests
 java -jar target/educonnect-backend-1.0.0.jar
 ```
 
 ---
 
-## 7. Initial Administrator Provisioning
+## 8. Frontend-to-Backend Integration Contract
 
-To prevent storing plaintext admin credentials in Git:
-1. `DataInitializer` checks if the configured `ADMIN_EMAIL` exists in MySQL on startup.
-2. If absent, it hashes `ADMIN_PASSWORD` using BCrypt and inserts the record with `Role.ADMIN`.
-3. In production, pass custom environment variables:
-   ```bash
-   ADMIN_EMAIL=faculty.coordinator@college.edu ADMIN_PASSWORD=ProductionSuperSecretPassword! java -jar app.jar
-   ```
+1. **Authentication:** Frontend stores JWT in `localStorage` (`educonnect_auth_token`), attaching `Authorization: Bearer <token>` on all mutation requests.
+2. **Library Explorer (`resources.html`):** Synchronizes URL query params (`q`, `category`, `department`, `semester`, `fileType`, `sort`, `page`) directly with `GET /api/resources`.
+3. **Upload Workflow (`upload.html`):** Submits `multipart/form-data` to `POST /api/resources` containing document file and metadata.
+4. **Moderator Portal (`admin.html`):** Connects to `GET /api/admin/resources` and triggers `PATCH /api/admin/resources/{id}/approve` or `reject`.
 
----
-
-## 8. Integration with Member 1's Frontend
-
-Member 1's vanilla JS client in `js/api.js` connects out-of-the-box:
-1. `POST /api/auth/login` returns `{ "token": "...", "user": {...} }`.
-2. Frontend stores token in `localStorage.setItem('educonnect_auth_token', token)`.
-3. Subsequent `fetch` requests include `Authorization: Bearer <token>`.
-4. `JwtAuthenticationFilter` validates the signature, extracts user context, and secures private resources seamlessly.

@@ -154,6 +154,86 @@ public class GlobalExceptionHandler {
     }
 
     /**
+     * Handles resource not found errors.
+     */
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<ApiErrorResponse> handleResourceNotFound(
+            ResourceNotFoundException ex,
+            HttpServletRequest request
+    ) {
+        logger.warn("Resource not found at {}: {}", request.getRequestURI(), ex.getMessage());
+
+        ApiErrorResponse response = new ApiErrorResponse(
+                HttpStatus.NOT_FOUND.value(),
+                ex.getMessage(),
+                null,
+                request.getRequestURI()
+        );
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+    }
+
+    /**
+     * Handles file upload and storage validation failures.
+     */
+    @ExceptionHandler(FileStorageException.class)
+    public ResponseEntity<ApiErrorResponse> handleFileStorageException(
+            FileStorageException ex,
+            HttpServletRequest request
+    ) {
+        logger.warn("File storage validation failed at {}: {}", request.getRequestURI(), ex.getMessage());
+
+        ApiErrorResponse response = new ApiErrorResponse(
+                HttpStatus.BAD_REQUEST.value(),
+                ex.getMessage(),
+                null,
+                request.getRequestURI()
+        );
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
+
+    /**
+     * Handles unauthorized access or modification of another user's resources.
+     */
+    @ExceptionHandler(UnauthorizedResourceAccessException.class)
+    public ResponseEntity<ApiErrorResponse> handleUnauthorizedResourceAccess(
+            UnauthorizedResourceAccessException ex,
+            HttpServletRequest request
+    ) {
+        logger.warn("Unauthorized resource modification attempt at {}: {}", request.getRequestURI(), ex.getMessage());
+
+        ApiErrorResponse response = new ApiErrorResponse(
+                HttpStatus.FORBIDDEN.value(),
+                ex.getMessage(),
+                null,
+                request.getRequestURI()
+        );
+
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
+    }
+
+    /**
+     * Handles file uploads exceeding maximum allowed size limit.
+     */
+    @ExceptionHandler(org.springframework.web.multipart.MaxUploadSizeExceededException.class)
+    public ResponseEntity<ApiErrorResponse> handleMaxUploadSizeExceeded(
+            org.springframework.web.multipart.MaxUploadSizeExceededException ex,
+            HttpServletRequest request
+    ) {
+        logger.warn("File size limit exceeded at {}: {}", request.getRequestURI(), ex.getMessage());
+
+        ApiErrorResponse response = new ApiErrorResponse(
+                HttpStatus.PAYLOAD_TOO_LARGE.value(),
+                "File exceeds maximum allowed upload size limit (25 MB).",
+                null,
+                request.getRequestURI()
+        );
+
+        return ResponseEntity.status(HttpStatus.PAYLOAD_TOO_LARGE).body(response);
+    }
+
+    /**
      * Handles explicit ResponseStatusException.
      */
     @ExceptionHandler(ResponseStatusException.class)

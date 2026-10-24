@@ -230,4 +230,6 @@ For seamless evaluation during our CSP review and college demonstration, EduConn
 - [x] **Page 10 (Admin Dashboard):** Summary metric cards, pending moderation review queue (Approve/Reject), published resources table with search and delete confirmation in `admin.html` and `admin.js`.
 - [x] **Centralized API Helper:** Robust Fetch client with timeout, error handling, Bearer tokens, and multipart FormData upload in `api.js`.
 - [x] **Backend Authentication & Security Module (Member 2):** Complete Spring Boot 3.x, Spring Security 6.x, MySQL JPA entity, BCrypt hashing, JWT provider & filter, RBAC (`STUDENT`, `ADMIN`), Auth/User REST controllers, global exception handling, and automated test suite in `/backend`.
+- [x] **Backend Educational Resource Management & Search Module (Member 3):** Complete Spring Boot 3.x resource CRUD, faceted multi-criteria dynamic search (`ResourceSpecification`), Spring Data pagination & sorting, category taxonomy & badges, physical file storage & attachment download streaming with path traversal guards, owner-only `/mine` and moderation approval workflows (`APPROVED`, `PENDING`, `REJECTED`), Flyway V2 migration, and 34 passing automated tests in `/backend`.
+
 
