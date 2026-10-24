@@ -229,4 +229,5 @@ For seamless evaluation during our CSP review and college demonstration, EduConn
 - [x] **Page 9 (About & Contact):** CSP mission, problem statement, technical stack overview in `about.html`; inquiry form with validation, FAQs, and honest developer notice in `contact.html` and `contact.js`.
 - [x] **Page 10 (Admin Dashboard):** Summary metric cards, pending moderation review queue (Approve/Reject), published resources table with search and delete confirmation in `admin.html` and `admin.js`.
 - [x] **Centralized API Helper:** Robust Fetch client with timeout, error handling, Bearer tokens, and multipart FormData upload in `api.js`.
-- [ ] **Backend Integration:** Full end-to-end integration pending final Spring Boot REST controller deployment by Member 2.
+- [x] **Backend Authentication & Security Module (Member 2):** Complete Spring Boot 3.x, Spring Security 6.x, MySQL JPA entity, BCrypt hashing, JWT provider & filter, RBAC (`STUDENT`, `ADMIN`), Auth/User REST controllers, global exception handling, and automated test suite in `/backend`.
+
