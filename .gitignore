@@ -27,3 +27,8 @@ target/
 *.war
 uploads/
 
+# Environment & Archive protection
+.env
+.env.local
+*.zip
+
