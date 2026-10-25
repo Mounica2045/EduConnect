@@ -43,6 +43,10 @@ public class UserResponse {
         );
     }
 
+    public static UserResponse fromEntity(User user) {
+        return from(user);
+    }
+
     public Long getId() {
         return id;
     }

@@ -9,6 +9,7 @@ import com.educonnect.repository.ResourceRepository;
 import com.educonnect.repository.UserRepository;
 import com.educonnect.security.JwtTokenProvider;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -37,6 +38,9 @@ class ResourceControllerTest {
     @Autowired
     private ResourceRepository resourceRepository;
 
+    @Autowired(required = false)
+    private com.educonnect.repository.BookmarkRepository bookmarkRepository;
+
     @Autowired
     private UserRepository userRepository;
 
@@ -58,6 +62,7 @@ class ResourceControllerTest {
 
     @BeforeEach
     void setUp() {
+        if (bookmarkRepository != null) bookmarkRepository.deleteAll();
         resourceRepository.deleteAll();
         userRepository.deleteAll();
 
@@ -116,6 +121,13 @@ class ResourceControllerTest {
         pendingResource.setStatus(ResourceStatus.PENDING);
         pendingResource.setUploadedBy(testStudent);
         pendingResource = resourceRepository.save(pendingResource);
+    }
+
+    @AfterEach
+    void tearDown() {
+        if (bookmarkRepository != null) bookmarkRepository.deleteAll();
+        resourceRepository.deleteAll();
+        userRepository.deleteAll();
     }
 
     @Test

@@ -4,8 +4,11 @@ import com.educonnect.dto.LoginRequest;
 import com.educonnect.dto.RegisterRequest;
 import com.educonnect.entity.User;
 import com.educonnect.enums.Role;
+import com.educonnect.repository.BookmarkRepository;
+import com.educonnect.repository.ResourceRepository;
 import com.educonnect.repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -34,6 +37,12 @@ class AuthControllerTest {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired(required = false)
+    private ResourceRepository resourceRepository;
+
+    @Autowired(required = false)
+    private BookmarkRepository bookmarkRepository;
+
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -42,6 +51,8 @@ class AuthControllerTest {
 
     @BeforeEach
     void setUp() {
+        if (bookmarkRepository != null) bookmarkRepository.deleteAll();
+        if (resourceRepository != null) resourceRepository.deleteAll();
         userRepository.deleteAll();
 
         // Seed one verified user for login tests
@@ -54,6 +65,13 @@ class AuthControllerTest {
                 Role.STUDENT
         );
         userRepository.save(testStudent);
+    }
+
+    @AfterEach
+    void tearDown() {
+        if (bookmarkRepository != null) bookmarkRepository.deleteAll();
+        if (resourceRepository != null) resourceRepository.deleteAll();
+        userRepository.deleteAll();
     }
 
     @Test

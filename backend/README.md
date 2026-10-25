@@ -1,20 +1,17 @@
-# EduConnect — Backend Services (Members 2 & 3)
+# EduConnect — Backend Services (Members 2, 3 & 4)
 > **College Learning Resource Sharing Portal — Community Service Project (CSP)**  
 > **Package:** `com.educonnect`  
-> **Modules:** Member 2 (Authentication & Security) & Member 3 (Resource Management & Search APIs)
+> **Modules:** Member 2 (Authentication & Security), Member 3 (Resource Management & Search APIs), Member 4 (Database, Bookmarks & Admin Module)
 
 ---
 
 ## 1. Overview & Responsibilities
 
-This module provides the core identity, authentication, authorization, and profile management services for **EduConnect**. It ensures:
-- Secure student self-registration with email validation and password policy enforcement.
-- Password hashing with **BCrypt** (strength factor 12) preventing plaintext credential storage.
-- Stateless **JWT (JSON Web Token)** authentication compatible with Member 1's decoupled Vanilla HTML/JS frontend.
-- Strict **Role-Based Access Control (RBAC)** distinguishing between `ROLE_STUDENT` and `ROLE_ADMIN`.
-- Protection of private student endpoints and administrative moderation queues.
-- Standardized, sanitized error responses preventing account enumeration and data leakage.
-- Automated tests using **JUnit 5**, **Mockito**, and **Spring Boot MockMvc**.
+This backend provides the core microservices for **EduConnect**:
+- **Member 2 (Auth & Security):** Identity management, BCrypt hashing, stateless JWT authentication, and RBAC (`ROLE_STUDENT`, `ROLE_ADMIN`).
+- **Member 3 (Resources & Search):** Educational resource management, multi-criteria faceted filtering, file upload/streaming, and category taxonomy.
+- **Member 4 (Database, Bookmarks & Admin):** MySQL relational schema design, Flyway migrations, student bookmarking, administrator dashboard metrics, moderation queue, user account management, and administrative audit logging.
+- **72 Automated Tests:** 100% passing test coverage using JUnit 5, Mockito, and Spring Boot MockMvc.
 
 ---
 
@@ -288,7 +285,72 @@ Supports dynamic combination of:
 
 ---
 
-## 6. Environment Variables & Setup
+## 6. MySQL Database, Bookmarks & Admin Module (Member 4)
+
+### 1. Database Design (`bookmarks` & `admin_audit_logs` Tables)
+
+```sql
+-- Bookmarks table with composite uniqueness and cascade deletes
+CREATE TABLE IF NOT EXISTS bookmarks (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    user_id BIGINT NOT NULL,
+    resource_id BIGINT NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT uq_bookmarks_user_resource UNIQUE (user_id, resource_id),
+    CONSTRAINT fk_bookmarks_users FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    CONSTRAINT fk_bookmarks_resources FOREIGN KEY (resource_id) REFERENCES resources(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE INDEX idx_bookmarks_user_created ON bookmarks(user_id, created_at);
+CREATE INDEX idx_bookmarks_resource ON bookmarks(resource_id);
+
+-- Admin audit log table
+CREATE TABLE IF NOT EXISTS admin_audit_logs (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    admin_id BIGINT NOT NULL,
+    admin_email VARCHAR(150) NOT NULL,
+    action VARCHAR(50) NOT NULL,
+    target_type VARCHAR(50) NOT NULL,
+    target_id BIGINT NOT NULL,
+    details VARCHAR(500),
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE INDEX idx_audit_logs_created ON admin_audit_logs(created_at);
+CREATE INDEX idx_audit_logs_admin ON admin_audit_logs(admin_id);
+CREATE INDEX idx_audit_logs_target ON admin_audit_logs(target_type, target_id);
+```
+
+### 2. Bookmarks Endpoints (`/api/bookmarks`)
+
+| Method | Endpoint | Access | Description |
+| :--- | :--- | :--- | :--- |
+| `POST` | `/api/bookmarks/{resourceId}` | Authenticated | Saves an approved resource to user's bookmarks (returns `201 Created`, or `409 Conflict` if already saved) |
+| `DELETE` | `/api/bookmarks/{resourceId}` | Authenticated | Removes resource from user's bookmarks |
+| `GET` | `/api/bookmarks/{resourceId}/status` | Authenticated | Checks if resource is bookmarked by current user (`{ "bookmarked": true }`) |
+| `GET` | `/api/bookmarks` | Authenticated | Returns JSON array of saved resources (Member 1 frontend) or paginated when `?page=0&size=10` |
+
+### 3. Administrator Moderation & Management Endpoints (`/api/admin`)
+
+| Method | Endpoint | Access | Description |
+| :--- | :--- | :--- | :--- |
+| `GET` | `/api/admin/dashboard` | Admin Only | Summary metric cards (`totalUsers`, `totalResources`, `approvedResources`, `pendingResources`, `rejectedResources`, `totalBookmarks`) |
+| `GET` | `/api/admin/resources/pending` | Admin Only | Paginated moderation review queue for pending resources |
+| `GET` | `/api/admin/resources` | Admin Only | Full resource catalog list with moderation flags |
+| `PATCH` | `/api/admin/resources/{id}/approve` | Admin Only | Approves resource publication and logs audit record |
+| `PATCH` | `/api/admin/resources/{id}/reject` | Admin Only | Rejects resource with optional review reason and logs audit record |
+| `DELETE` | `/api/admin/resources/{id}` | Admin Only | Permanently deletes resource and purges stored physical file |
+| `GET` | `/api/admin/users` | Admin Only | Paginated user accounts list (safe DTO with zero password hash exposure) |
+| `PATCH` | `/api/admin/users/{id}/status` | Admin Only | Enables or disables student accounts (self-disable prevention enforced) |
+| `GET` | `/api/admin/audit-logs` | Admin Only | Chronological audit trail of all moderation actions |
+
+### 4. Postman Collection
+A complete Postman v2.1.0 collection with pre-configured requests, environment variables, Bearer tokens, and automated test scripts is available at:  
+`backend/EduConnect_Member4_Bookmarks_and_Admin.postman_collection.json`
+
+---
+
+## 7. Environment Variables & Setup
 
 Create the MySQL database in your local MySQL instance:
 
@@ -314,7 +376,7 @@ CREATE DATABASE educonnect_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 ---
 
-## 7. How to Build & Run
+## 8. How to Build & Run
 
 ### A. Run with Maven Wrapper
 ```powershell
@@ -322,7 +384,7 @@ cd backend
 .\mvnw.cmd spring-boot:run
 ```
 
-### B. Run Automated Test Suite (All 34 Tests)
+### B. Run Automated Test Suite (All 72 Tests)
 All tests execute against an isolated in-memory H2 database:
 ```powershell
 cd backend

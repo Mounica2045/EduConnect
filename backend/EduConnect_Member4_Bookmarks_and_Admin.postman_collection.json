@@ -1,0 +1,574 @@
+{
+  "info": {
+    "_postman_id": "e4d3a2b1-0987-4321-abcd-ef0123456789",
+    "name": "EduConnect — Member 4: Bookmarks, Admin Moderation & Database API",
+    "description": "Postman API collection for EduConnect Member 4 deliverables, covering Student Bookmarks, Admin Moderation Queue, Dashboard Analytics, User Account Moderation, and Administrative Audit Logs.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080",
+      "type": "string"
+    },
+    {
+      "key": "studentToken",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "adminToken",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "resourceId",
+      "value": "1",
+      "type": "string"
+    },
+    {
+      "key": "userId",
+      "value": "2",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "1. Authentication (Prerequisites)",
+      "item": [
+        {
+          "name": "Login as Student",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData.token) {",
+                  "    pm.collectionVariables.set('studentToken', jsonData.token);",
+                  "    console.log('Saved studentToken');",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"aarav.sharma@college.edu\",\n  \"password\": \"StudentPass123!\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "login"]
+            },
+            "description": "Authenticates as a student user and saves the Bearer JWT to the studentToken variable."
+          }
+        },
+        {
+          "name": "Login as Admin",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData.token) {",
+                  "    pm.collectionVariables.set('adminToken', jsonData.token);",
+                  "    console.log('Saved adminToken');",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin.lakshmi@college.edu\",\n  \"password\": \"AdminPass123!\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "login"]
+            },
+            "description": "Authenticates as an administrator and saves the Bearer JWT to the adminToken variable."
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. Bookmarks Module (/api/bookmarks)",
+      "item": [
+        {
+          "name": "Save / Add Bookmark",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{studentToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/bookmarks/{{resourceId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "bookmarks", "{{resourceId}}"]
+            },
+            "description": "Saves an approved educational resource to the student's personal bookmarks. Returns 201 Created on success, 409 Conflict if already saved, 400 Bad Request if unapproved."
+          }
+        },
+        {
+          "name": "Check Bookmark Status",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{studentToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/bookmarks/{{resourceId}}/status",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "bookmarks", "{{resourceId}}", "status"]
+            },
+            "description": "Returns boolean bookmarked status for dynamic bookmark button toggles on the UI."
+          }
+        },
+        {
+          "name": "Get My Bookmarks (Array Format for Frontend)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{studentToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/bookmarks",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "bookmarks"]
+            },
+            "description": "Retrieves the authenticated user's bookmarked resources as a JSON array, directly compatible with Member 1's js/bookmarks.js and js/components.js."
+          }
+        },
+        {
+          "name": "Get My Bookmarks (Paginated Format)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{studentToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/bookmarks?page=0&size=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "bookmarks"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
+                }
+              ]
+            },
+            "description": "Retrieves paginated bookmarks with totalElements, totalPages, and pagination metadata."
+          }
+        },
+        {
+          "name": "Remove Bookmark",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{studentToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/bookmarks/{{resourceId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "bookmarks", "{{resourceId}}"]
+            },
+            "description": "Deletes the bookmark relationship between authenticated student and resource ID."
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. Admin Dashboard & Moderation (/api/admin)",
+      "item": [
+        {
+          "name": "Get Dashboard Statistics",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{adminToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/dashboard",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "admin", "dashboard"]
+            },
+            "description": "Aggregates summary metric counts for registered users, total resources, approved, pending, rejected, and bookmarks."
+          }
+        },
+        {
+          "name": "Get Pending Resources Queue",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{adminToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/resources/pending?page=0&size=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "admin", "resources", "pending"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
+                }
+              ]
+            },
+            "description": "Returns paginated list of resources awaiting moderator review."
+          }
+        },
+        {
+          "name": "Get All Resources (Admin List View)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{adminToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/resources",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "admin", "resources"]
+            },
+            "description": "Returns JSON array of all resources for Member 1 admin portal table (includes isApproved flags)."
+          }
+        },
+        {
+          "name": "Approve Resource",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{adminToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/resources/{{resourceId}}/approve",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "admin", "resources", "{{resourceId}}", "approve"]
+            },
+            "description": "Approves a pending resource for public catalog display and records the action in admin audit log."
+          }
+        },
+        {
+          "name": "Reject Resource",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{adminToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reason\": \"Incomplete document or does not meet college academic standards.\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/resources/{{resourceId}}/reject",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "admin", "resources", "{{resourceId}}", "reject"]
+            },
+            "description": "Rejects a resource submission with optional reason and creates audit trail entry."
+          }
+        },
+        {
+          "name": "Delete Resource (Admin)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{adminToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/resources/{{resourceId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "admin", "resources", "{{resourceId}}"]
+            },
+            "description": "Permanently deletes a resource and cleans up its stored file from the disk."
+          }
+        },
+        {
+          "name": "Get All Users",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{adminToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/users?page=0&size=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "admin", "users"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
+                }
+              ]
+            },
+            "description": "Retrieves paginated registered students and administrators without exposing password hashes."
+          }
+        },
+        {
+          "name": "Update User Status (Enable/Disable)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{adminToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"enabled\": false\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/users/{{userId}}/status",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "admin", "users", "{{userId}}", "status"]
+            },
+            "description": "Enables or disables a user account. Admins cannot disable their own account."
+          }
+        },
+        {
+          "name": "Get Audit Logs",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{adminToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/audit-logs?page=0&size=20",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "admin", "audit-logs"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "20"
+                }
+              ]
+            },
+            "description": "Retrieves paginated chronological audit logs for administrative actions."
+          }
+        }
+      ]
+    }
+  ]
+}

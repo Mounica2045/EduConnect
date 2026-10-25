@@ -75,6 +75,7 @@ public class Resource {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "uploaded_by_id", foreignKey = @ForeignKey(name = "fk_resources_users"))
+    @org.hibernate.annotations.OnDelete(action = org.hibernate.annotations.OnDeleteAction.SET_NULL)
     private User uploadedBy;
 
     @NotNull

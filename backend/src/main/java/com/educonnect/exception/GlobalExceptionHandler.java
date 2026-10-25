@@ -234,6 +234,66 @@ public class GlobalExceptionHandler {
     }
 
     /**
+     * Handles duplicate bookmark conflict.
+     */
+    @ExceptionHandler(DuplicateBookmarkException.class)
+    public ResponseEntity<ApiErrorResponse> handleDuplicateBookmark(
+            DuplicateBookmarkException ex,
+            HttpServletRequest request
+    ) {
+        logger.warn("Duplicate bookmark attempt at {}: {}", request.getRequestURI(), ex.getMessage());
+
+        ApiErrorResponse response = new ApiErrorResponse(
+                HttpStatus.CONFLICT.value(),
+                ex.getMessage(),
+                null,
+                request.getRequestURI()
+        );
+
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
+    }
+
+    /**
+     * Handles bookmark not found.
+     */
+    @ExceptionHandler(BookmarkNotFoundException.class)
+    public ResponseEntity<ApiErrorResponse> handleBookmarkNotFound(
+            BookmarkNotFoundException ex,
+            HttpServletRequest request
+    ) {
+        logger.warn("Bookmark not found at {}: {}", request.getRequestURI(), ex.getMessage());
+
+        ApiErrorResponse response = new ApiErrorResponse(
+                HttpStatus.NOT_FOUND.value(),
+                ex.getMessage(),
+                null,
+                request.getRequestURI()
+        );
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+    }
+
+    /**
+     * Handles illegal arguments, business rule violations, or self-disable prevention.
+     */
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<ApiErrorResponse> handleIllegalArgument(
+            IllegalArgumentException ex,
+            HttpServletRequest request
+    ) {
+        logger.warn("Illegal argument error at {}: {}", request.getRequestURI(), ex.getMessage());
+
+        ApiErrorResponse response = new ApiErrorResponse(
+                HttpStatus.BAD_REQUEST.value(),
+                ex.getMessage(),
+                null,
+                request.getRequestURI()
+        );
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
+
+    /**
      * Handles explicit ResponseStatusException.
      */
     @ExceptionHandler(ResponseStatusException.class)
