@@ -1,0 +1,85 @@
+services:
+  # ----------------------------------------------------------------------------
+  # MySQL Database Service
+  # ----------------------------------------------------------------------------
+  mysql:
+    image: mysql:8.0
+    container_name: educonnect-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${DB_NAME:-educonnect_db}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-root}
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${DB_PASSWORD:-root}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    networks:
+      - educonnect-network
+
+  # ----------------------------------------------------------------------------
+  # Spring Boot Backend API Service
+  # ----------------------------------------------------------------------------
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: educonnect-backend
+    restart: unless-stopped
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      SERVER_PORT: 8080
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_NAME: ${DB_NAME:-educonnect_db}
+      DB_USERNAME: root
+      DB_PASSWORD: ${DB_PASSWORD:-root}
+      JWT_SECRET: ${JWT_SECRET:-c3VwZXItc2VjdXJlLWVkdWNvbm5lY3Qtand0LXNlY3JldC1rZXktZm9yLWNzcDIwMjYtY29sbGVnZS1wb3J0YWw=}
+      JWT_EXPIRATION_MS: ${JWT_EXPIRATION_MS:-86400000}
+      CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS:-http://localhost:3000,http://127.0.0.1:3000,http://localhost:8080}
+      UPLOAD_DIR: /app/uploads/resources
+      INIT_DEFAULT_ACCOUNTS: "true"
+      ADMIN_EMAIL: ${ADMIN_EMAIL:-admin@college.edu}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-AdminPassword123!}
+      STUDENT_EMAIL: ${STUDENT_EMAIL:-student@college.edu}
+      STUDENT_PASSWORD: ${STUDENT_PASSWORD:-Password123!}
+    ports:
+      - "8080:8080"
+    volumes:
+      - uploads_data:/app/uploads/resources
+    networks:
+      - educonnect-network
+
+  # ----------------------------------------------------------------------------
+  # Static Web Server for Vanilla HTML/CSS/JS Frontend
+  # ----------------------------------------------------------------------------
+  frontend:
+    image: nginx:alpine
+    container_name: educonnect-frontend
+    restart: unless-stopped
+    ports:
+      - "3000:80"
+    volumes:
+      - ./:/usr/share/nginx/html:ro
+    depends_on:
+      - backend
+    networks:
+      - educonnect-network
+
+volumes:
+  mysql_data:
+    name: educonnect_mysql_data
+  uploads_data:
+    name: educonnect_uploads_data
+
+networks:
+  educonnect-network:
+    name: educonnect_network
+    driver: bridge

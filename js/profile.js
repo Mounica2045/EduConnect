@@ -163,12 +163,30 @@ async function loadUserUploads(user, countBadge) {
   const container = document.getElementById('user-uploads-container');
   if (!container) return;
 
-  // Filter sample resources where contributor is current user or matching name
-  const userName = (user.fullName || '').toLowerCase();
-  const userUploads = CONFIG.SAMPLE_RESOURCES.filter(r => {
-    return (r.contributorName || '').toLowerCase() === userName ||
-           (r.contributorName === 'Aarav Sharma' && user.role === 'ROLE_STUDENT');
-  });
+  let userUploads = [];
+
+  // Attempt to fetch actual contributions from Spring Boot backend if authenticated
+  if (authService.isAuthenticated()) {
+    try {
+      const response = await apiClient.get('/resources/mine', { page: 0, size: 50 });
+      const items = response && response.content ? response.content : (Array.isArray(response) ? response : []);
+      userUploads = items.map(r => ({
+        ...r,
+        isApproved: r.status === 'APPROVED' || r.approved === true
+      }));
+    } catch (_) {
+      // Backend offline or error, fall back to sample filtering below
+    }
+  }
+
+  // Fallback to sample dataset if backend returned empty or offline
+  if (userUploads.length === 0) {
+    const userName = (user.fullName || '').toLowerCase();
+    userUploads = CONFIG.SAMPLE_RESOURCES.filter(r => {
+      return (r.contributorName || '').toLowerCase() === userName ||
+             (r.contributorName === 'Aarav Sharma' && user.role === 'ROLE_STUDENT');
+    });
+  }
 
   if (countBadge) countBadge.textContent = userUploads.length;
 

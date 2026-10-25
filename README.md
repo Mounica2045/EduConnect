@@ -232,5 +232,41 @@ For seamless evaluation during our CSP review and college demonstration, EduConn
 - [x] **Backend Authentication & Security Module (Member 2):** Complete Spring Boot 3.x, Spring Security 6.x, MySQL JPA entity, BCrypt hashing, JWT provider & filter, RBAC (`STUDENT`, `ADMIN`), Auth/User REST controllers, global exception handling, and automated test suite in `/backend`.
 - [x] **Backend Educational Resource Management & Search Module (Member 3):** Complete Spring Boot 3.x resource CRUD, faceted multi-criteria dynamic search (`ResourceSpecification`), Spring Data pagination & sorting, category taxonomy & badges, physical file storage & attachment download streaming with path traversal guards, owner-only `/mine` and moderation approval workflows (`APPROVED`, `PENDING`, `REJECTED`), Flyway V2 migration, and 34 passing automated tests in `/backend`.
 - [x] **Backend Database, Bookmarks & Admin Moderation Module (Member 4):** Complete MySQL relational design with composite unique constraints and cascade rules, Flyway V3 migration, bookmarking service & REST APIs (`/api/bookmarks/**`) with duplicate prevention and approved-only enforcement, admin dashboard statistics (`/api/admin/dashboard`), moderation review queue (`/api/admin/resources/pending`, `/approve`, `/reject`, `/delete`), user management with self-lockout guard (`/api/admin/users/**`), administrative audit logging (`admin_audit_logs`), Postman collection, and 72 total passing automated tests in `/backend`.
+- [x] **Full-Stack Integration, Testing, CI/CD & Deployment (Member 5):** Complete frontend-to-backend integration (dynamic API URL injection, live document downloads, student uploads sync), Contact microservice (`POST /api/contact`), comprehensive End-to-End User Journeys integration tests (80/80 passing tests, 0 failures), Docker multi-stage containerization (`Dockerfile`, `docker-compose.yml`, `.env.example`), GitHub Actions CI pipeline (`.github/workflows/ci.yml`), and full technical documentation suite in `/docs`.
+
+---
+
+## 9. Comprehensive Technical Documentation
+
+Complete architectural, operational, and testing specifications are maintained in the [`docs/`](./docs) directory:
+
+- [System Architecture & Design (`docs/architecture.md`)](./docs/architecture.md) — Tier diagrams, Mermaid sequence flows, entity relationships, and security model.
+- [REST API Contract (`docs/api-contract.md`)](./docs/api-contract.md) — Detailed specifications for all 22 REST endpoints, request/response payloads, and status codes.
+- [Database Setup & Schema (`docs/database-setup.md`)](./docs/database-setup.md) — MySQL DDL, Flyway migration files (V1, V2, V3), seed accounts, and indexing strategy.
+- [Deployment & Operations Guide (`docs/deployment.md`)](./docs/deployment.md) — Docker Compose local stack, cloud deployment (Render, Railway, AWS), and production security.
+- [Testing & QA Report (`docs/testing.md`)](./docs/testing.md) — Test pyramid breakdown, 80 passing automated tests, and 6 core manual user journey checklists.
+- [Community Service Project Final Report (`docs/project-report.md`)](./docs/project-report.md) — Academic CSP evaluation report, team contribution matrix, and community outcomes.
+
+---
+
+## 10. Quick Start with Docker Compose (Recommended)
+
+Run the complete multi-container stack (MySQL 8.0 + Spring Boot 3.3.4 + Nginx Static Frontend) with a single command:
+
+```bash
+# 1. Clone repository
+git clone https://github.com/Mounica2045/EduConnect.git
+cd EduConnect
+
+# 2. Copy environment template
+cp .env.example .env
+
+# 3. Build and launch all services
+docker compose up -d --build
+
+# 4. Open portal in browser:
+# Frontend Web App: http://localhost:3000
+# Backend REST API: http://localhost:8080/api/resources
+```
 
 

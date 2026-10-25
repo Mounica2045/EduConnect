@@ -5,8 +5,8 @@
  */
 
 const CONFIG = {
-  // Spring Boot API Base URL (Configurable for local dev / production)
-  API_BASE_URL: 'http://localhost:8080/api',
+  // Spring Boot API Base URL (Configurable for local dev / staging / production)
+  API_BASE_URL: (window.EDUCONNECT_API_BASE_URL || 'http://localhost:8080/api').replace(/\/+$/, ''),
 
   // Request timeout in milliseconds
   REQUEST_TIMEOUT_MS: 12000,

@@ -1,7 +1,7 @@
-# EduConnect — Backend Services (Members 2, 3 & 4)
+# EduConnect — Backend Services (Members 2, 3, 4 & 5)
 > **College Learning Resource Sharing Portal — Community Service Project (CSP)**  
 > **Package:** `com.educonnect`  
-> **Modules:** Member 2 (Authentication & Security), Member 3 (Resource Management & Search APIs), Member 4 (Database, Bookmarks & Admin Module)
+> **Modules:** Member 2 (Authentication & Security), Member 3 (Resource Management & Search APIs), Member 4 (Database, Bookmarks & Admin Module), Member 5 (Integration, QA, CI/CD & Deployment)
 
 ---
 
@@ -11,7 +11,8 @@ This backend provides the core microservices for **EduConnect**:
 - **Member 2 (Auth & Security):** Identity management, BCrypt hashing, stateless JWT authentication, and RBAC (`ROLE_STUDENT`, `ROLE_ADMIN`).
 - **Member 3 (Resources & Search):** Educational resource management, multi-criteria faceted filtering, file upload/streaming, and category taxonomy.
 - **Member 4 (Database, Bookmarks & Admin):** MySQL relational schema design, Flyway migrations, student bookmarking, administrator dashboard metrics, moderation queue, user account management, and administrative audit logging.
-- **72 Automated Tests:** 100% passing test coverage using JUnit 5, Mockito, and Spring Boot MockMvc.
+- **Member 5 (Integration, Testing & Deployment):** End-to-end integration testing (`UserJourneysIntegrationTest`), Contact microservice (`POST /api/contact`), Docker multi-stage containerization, GitHub Actions CI pipeline, and full-stack documentation.
+- **80 Automated Tests:** 100% passing test coverage using JUnit 5, Mockito, and Spring Boot MockMvc.
 
 ---
 
@@ -378,20 +379,26 @@ CREATE DATABASE educonnect_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 ## 8. How to Build & Run
 
-### A. Run with Maven Wrapper
+### A. Run with Docker Compose (Recommended)
+From the repository root directory:
+```bash
+docker compose up -d --build
+```
+
+### B. Run with Maven Wrapper
 ```powershell
 cd backend
 .\mvnw.cmd spring-boot:run
 ```
 
-### B. Run Automated Test Suite (All 72 Tests)
-All tests execute against an isolated in-memory H2 database:
+### C. Run Automated Test Suite (All 80 Tests)
+All unit, controller, security, and end-to-end integration tests execute against an isolated in-memory H2 database:
 ```powershell
 cd backend
 .\mvnw.cmd test
 ```
 
-### C. Build Production JAR
+### D. Build Production JAR
 ```powershell
 cd backend
 .\mvnw.cmd clean package -DskipTests
@@ -400,10 +407,11 @@ java -jar target/educonnect-backend-1.0.0.jar
 
 ---
 
-## 8. Frontend-to-Backend Integration Contract
+## 9. Frontend-to-Backend Integration Contract
 
 1. **Authentication:** Frontend stores JWT in `localStorage` (`educonnect_auth_token`), attaching `Authorization: Bearer <token>` on all mutation requests.
 2. **Library Explorer (`resources.html`):** Synchronizes URL query params (`q`, `category`, `department`, `semester`, `fileType`, `sort`, `page`) directly with `GET /api/resources`.
 3. **Upload Workflow (`upload.html`):** Submits `multipart/form-data` to `POST /api/resources` containing document file and metadata.
 4. **Moderator Portal (`admin.html`):** Connects to `GET /api/admin/resources` and triggers `PATCH /api/admin/resources/{id}/approve` or `reject`.
+5. **Contact Inquiries (`contact.html`):** Submits student feedback and questions to `POST /api/contact`.
 

@@ -1,0 +1,74 @@
+name: EduConnect CI - Integration & Quality Pipeline
+
+on:
+  push:
+    branches: [ "main", "feature/**" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  backend-test:
+    name: Backend Build & Automated Test Suite (Java 21)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository source
+        uses: actions/checkout@v4
+
+      - name: Set up Java 21 LTS (Eclipse Temurin)
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Run Backend Automated Tests (80 Tests across 10 Test Classes)
+        working-directory: ./backend
+        run: |
+          chmod +x ./mvnw
+          ./mvnw test
+
+      - name: Package Production JAR
+        working-directory: ./backend
+        run: |
+          ./mvnw clean package -DskipTests
+
+      - name: Archive Production JAR Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: educonnect-backend-jar
+          path: backend/target/educonnect-backend-*.jar
+          retention-days: 5
+
+  frontend-validation:
+    name: Frontend Syntax & Static Validation
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository source
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js for syntax linting
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Validate Frontend HTML & JavaScript files
+        run: |
+          echo "Validating JavaScript syntax across js/ directory..."
+          node -c js/config.js
+          node -c js/api.js
+          node -c js/auth.js
+          node -c js/navigation.js
+          node -c js/components.js
+          node -c js/home.js
+          node -c js/resources.js
+          node -c js/resource-details.js
+          node -c js/login.js
+          node -c js/register.js
+          node -c js/upload.js
+          node -c js/bookmarks.js
+          node -c js/profile.js
+          node -c js/contact.js
+          node -c js/admin.js
+          echo "All 15 JavaScript modules passed syntax validation."

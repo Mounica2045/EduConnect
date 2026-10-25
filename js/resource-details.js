@@ -215,13 +215,46 @@ function renderDetails(container, resource) {
 /**
  * Handles download action by triggering file stream or simulated browser download
  */
-function handleDownload(resource) {
-  // If backend file download endpoint is configured:
-  // window.location.href = `${CONFIG.API_BASE_URL}/resources/${resource.id}/download`;
-
+async function handleDownload(resource) {
   toast.info('Downloading Resource', `Preparing ${resource.title} (${resource.fileType || 'PDF'})...`);
 
-  // Create client-side academic text blob as safe simulation if offline
+  // If this is a real database resource (numeric ID), stream directly from backend
+  const isBackendResource = typeof resource.id === 'number' || /^\d+$/.test(String(resource.id));
+
+  if (isBackendResource) {
+    try {
+      const downloadUrl = `${CONFIG.API_BASE_URL}/resources/${encodeURIComponent(resource.id)}/download`;
+      const token = authService.getToken();
+      const headers = token ? { 'Authorization': `Bearer ${token}` } : {};
+
+      const response = await fetch(downloadUrl, { headers });
+      if (response.ok) {
+        const blob = await response.blob();
+        const disposition = response.headers.get('Content-Disposition');
+        let filename = resource.fileName || `${resource.title.replace(/[^a-zA-Z0-9_-]/g, '_')}.${(resource.fileType || 'pdf').toLowerCase()}`;
+        if (disposition && disposition.includes('filename=')) {
+          const match = disposition.match(/filename="?([^";]+)"?/);
+          if (match && match[1]) filename = match[1];
+        }
+
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+
+        toast.success('Download Complete', 'The study document has been downloaded to your device.');
+        return;
+      }
+    } catch (e) {
+      console.warn('Backend download stream error, falling back to simulated document:', e);
+    }
+  }
+
+  // Fallback: Create client-side academic text blob as safe simulation if offline or demo resource
   setTimeout(() => {
     const sampleBlobContent = `
 ================================================================================
@@ -233,7 +266,7 @@ Contributor: ${resource.contributorName || 'Peer Contributor'}
 ================================================================================
 
 SUMMARY:
-${resource.description}
+${resource.description || 'Study material contributed for peer-to-peer learning.'}
 
 [This study material was downloaded from the EduConnect Portal as part of our College Community Service Project (CSP)]
     `.trim();
@@ -249,7 +282,7 @@ ${resource.description}
     URL.revokeObjectURL(url);
 
     toast.success('Download Complete', 'The study document has been downloaded to your device.');
-  }, 1000);
+  }, 800);
 }
 
 /**
